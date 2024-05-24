@@ -89,7 +89,7 @@ const SearchBooks = () => {
     <>
       <div className="text-light bg-dark p-5">
         <Container>
-          <h1>Search for Books!</h1>
+          <h1>Search Exercises</h1>
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>
@@ -99,7 +99,7 @@ const SearchBooks = () => {
                   onChange={(e) => setSearchInput(e.target.value)}
                   type='text'
                   size='lg'
-                  placeholder='Search for a book'
+                  placeholder='Find your exercise'
                 />
               </Col>
               <Col xs={12} md={4}>
@@ -116,7 +116,7 @@ const SearchBooks = () => {
         <h2 className='pt-5'>
           {searchedBooks.length
             ? `Viewing ${searchedBooks.length} results:`
-            : 'Search for a book to begin'}
+            : 'Search for a exercise to begin'}
         </h2>
         <Row>
           {searchedBooks.map((book) => {

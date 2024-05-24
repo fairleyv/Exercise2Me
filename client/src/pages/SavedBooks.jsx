@@ -75,14 +75,14 @@ const SavedBooks = () => {
     <>
       <div fluid className="text-light bg-dark p-5">
         <Container>
-          <h1>Viewing saved books!</h1>
+          <h1>Viewing your Routine!</h1>
         </Container>
       </div>
       <Container>
         <h2 className='pt-5'>
           {userData.savedBooks.length
-            ? `Viewing ${userData.savedBooks.length} saved ${userData.savedBooks.length === 1 ? 'book' : 'books'}:`
-            : 'You have no saved books!'}
+            ? `Viewing ${userData.savedBooks.length} saved ${userData.savedBooks.length === 1 ? 'exercise' : 'exercises'}:`
+            : 'You have no saved exersices!'}
         </h2>
         <Row>
           {userData.savedBooks.map((book) => {
@@ -95,7 +95,7 @@ const SavedBooks = () => {
                     <p className='small'>Authors: {book.authors}</p>
                     <Card.Text>{book.description}</Card.Text>
                     <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book.bookId)}>
-                      Delete this Book!
+                      Delete this Exercise!
                     </Button>
                   </Card.Body>
                 </Card>
