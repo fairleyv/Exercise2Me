@@ -1,8 +1,8 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// import schema from Book.js
-const bookSchema = require('./Book');
+// import schema from Exercise.js
+const exerciseSchema = require('./Exercise');
 
 const userSchema = new Schema(
   {
@@ -21,8 +21,11 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    // set savedBooks to be an array of data that adheres to the bookSchema
-    savedBooks: [bookSchema],
+    // set savedExercises to be an array of data that adheres to the exerciseSchema
+    savedExercises: [exerciseSchema],
+    // set favoriteExercises to be an array of data that adheres to the exerciseSchema
+    favoriteExercises: [exerciseSchema]
+
   },
   // set this to use virtual below
   {
@@ -47,9 +50,15 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-// when we query a user, we'll also get another field called `bookCount` with the number of saved books we have
-userSchema.virtual('bookCount').get(function () {
-  return this.savedBooks.length;
+// when we query a user, we'll also get another field called `savedExerciseCount` with the number of saved exercises we have
+userSchema.virtual('savedExerciseCount').get(function () {
+  return this.savedExercises.length;
+});
+
+// when we query a user, we'll also get another field called `favoriteExerciseCount` with the number of favorite exercises we have
+
+userSchema.virtual('favoriteExerciseCount').get(function () {
+  return this.favoriteExercises.length;
 });
 
 const User = model('User', userSchema);
