@@ -13,15 +13,12 @@ const groupSchema = new Schema({
   }
 })
 
+// Schema for exercise Model
 const exerciseSchema = new Schema({
   description: {
     type: String,
     required: true,
   },  
-  exerciseId: {
-    type: String,
-    required: true,
-  },
   image: {
     type: String,
   },
