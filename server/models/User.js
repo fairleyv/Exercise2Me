@@ -1,8 +1,8 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// import schema from Exercise.js
-const exerciseSchema = require('./Exercise');
+// import model from Exercise.js
+const Exercise = require('./Exercise');
 
 const userSchema = new Schema(
   {
@@ -22,9 +22,15 @@ const userSchema = new Schema(
       required: true,
     },
     // set savedExercises to be an array of data that adheres to the exerciseSchema
-    savedExercises: [exerciseSchema],
+    savedExercises: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Exercise',
+    }],
     // set favoriteExercises to be an array of data that adheres to the exerciseSchema
-    favoriteExercises: [exerciseSchema]
+    favoriteExercises: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Exercise',
+    }]
 
   },
   // set this to use virtual below
