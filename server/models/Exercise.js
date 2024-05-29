@@ -1,6 +1,18 @@
 const { Schema, model } = require('mongoose');
 
-// This is a subdocument schema, it won't become its own model but we'll use it as the schema for the User's `savedExercises` array in User.js
+// Group subschema to be used in the exerciseSchema
+
+const groupSchema = new Schema({
+  exerciseName: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  }
+})
+
 const exerciseSchema = new Schema({
   description: {
     type: String,
@@ -24,6 +36,7 @@ const exerciseSchema = new Schema({
     type: String,
     required: true,
   },
+  group: [groupSchema]
 });
 
 const Exercise = model('Exercise', exerciseSchema);
