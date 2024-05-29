@@ -93,14 +93,18 @@ const SearchBooks = () => {
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>
-                <Form.Control
-                  name='searchInput'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Find your exercise'
-                />
+              <Form.Control
+        as='select'
+        name='searchInput'
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)}
+        size='lg'
+        placeholder='Find your exercise'
+      >
+        <option value='upper'>Upper Body</option>
+        <option value='lower'>Lower Body</option>
+        <option value='cardio'>Cardio</option>
+      </Form.Control>
               </Col>
               <Col xs={12} md={4}>
                 <Button type='submit' variant='success' size='lg'>
@@ -116,7 +120,7 @@ const SearchBooks = () => {
         <h2 className='pt-5'>
           {searchedBooks.length
             ? `Viewing ${searchedBooks.length} results:`
-            : 'Search for a exercise to begin'}
+            : 'Choose type of exercise to begin'}
         </h2>
         <Row>
           {searchedBooks.map((book) => {
