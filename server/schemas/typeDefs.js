@@ -18,12 +18,23 @@ const typeDefs = `
     exerciseName: String!
   }
 
+    type Auth {
+    token: ID!
+    user: User
+  }
+
+
   type Query {
     getAllUsers: [userSchema]!
     getUserById(userId: ID!): userSchema
     getAllExercises: [exerciseSchema]!
     getExerciseById(exerciseId: ID!): exerciseSchema
 
+  }
+
+    type Mutation {
+    addUser(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
   }
 
 `;
