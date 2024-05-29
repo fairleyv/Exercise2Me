@@ -3,10 +3,12 @@ const users = [
     {
         "username": "lernantino",
         "email": "lernantino@gmail.com",
+        "password": "lernantino111000"
     },
     {
         "username": "mabs5025",
         "email": "mabs5025@gmail.com",
+        "password": "mabs242424"
     }
 ];
 
