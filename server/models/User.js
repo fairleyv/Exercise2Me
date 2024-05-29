@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// import schema from Exercise.js
+// import model from Exercise.js
 const Exercise = require('./Exercise');
 
 const userSchema = new Schema(
