@@ -19,8 +19,10 @@ const typeDefs = `
   }
 
   type Query {
+    getAllUsers: [userSchema]!
     getUserById(userId: ID!): userSchema
     getAllExercises: [exerciseSchema]!
+    getExerciseById(exerciseId: ID!): exerciseSchema
 
   }
 
