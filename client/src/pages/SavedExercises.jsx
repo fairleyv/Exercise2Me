@@ -7,11 +7,11 @@ import {
   Col
 } from 'react-bootstrap';
 
-import { getMe, deleteBook } from '../utils/API';
+import { getMe, deleteExercise } from '../utils/API';
 import Auth from '../utils/auth';
-import { removeBookId } from '../utils/localStorage';
+import { removeExerciseId } from '../utils/localStorage';
 
-const SavedBooks = () => {
+const SavedExercises = () => {
   const [userData, setUserData] = useState({});
 
   // use this to determine if `useEffect()` hook needs to run again
@@ -42,8 +42,8 @@ const SavedBooks = () => {
     getUserData();
   }, [userDataLength]);
 
-  // create function that accepts the book's mongo _id value as param and deletes the book from the database
-  const handleDeleteBook = async (bookId) => {
+  // create function that accepts the Exercise's mongo _id value as param and deletes the Exercise from the database
+  const handleDeleteExercise = async (exerciseId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -51,7 +51,7 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = await deleteBook(bookId, token);
+      const response = await deleteExercise(exerciseId, token);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
@@ -59,8 +59,8 @@ const SavedBooks = () => {
 
       const updatedUser = await response.json();
       setUserData(updatedUser);
-      // upon success, remove book's id from localStorage
-      removeBookId(bookId);
+      // upon success, remove Exercise's id from localStorage
+      removeExerciseId(exerciseId);
     } catch (err) {
       console.error(err);
     }
@@ -80,21 +80,21 @@ const SavedBooks = () => {
       </div>
       <Container>
         <h2 className='pt-5'>
-          {userData.savedBooks.length
-            ? `Viewing ${userData.savedBooks.length} saved ${userData.savedBooks.length === 1 ? 'exercise' : 'exercises'}:`
-            : 'You have no saved exersices!'}
+          {userData.savedExercises.length
+            ? `Viewing ${userData.savedExercises.length} saved ${userData.savedExercises.length === 1 ? 'exercise' : 'exercises'}:`
+            : 'You have no saved exercises!'}
         </h2>
         <Row>
-          {userData.savedBooks.map((book) => {
+          {userData.savedExercises.map((Exercise) => {
             return (
               <Col md="4">
-                <Card key={book.bookId} border='dark'>
-                  {book.image ? <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' /> : null}
+                <Card key={Exercise.exerciseId} border='dark'>
+                  {Exercise.image ? <Card.Img src={Exercise.image} alt={`${Exercise.name}`} variant='top' /> : null}
                   <Card.Body>
-                    <Card.Title>{book.title}</Card.Title>
-                    <p className='small'>Authors: {book.authors}</p>
-                    <Card.Text>{book.description}</Card.Text>
-                    <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book.bookId)}>
+                    <Card.Title>{Exercise.name}</Card.Title>
+                    <p className='small'>Equipment: {Exercise.equipmentNeeded}</p>
+                    <Card.Text>{Exercise.description}</Card.Text>
+                    <Button className='btn-block btn-danger' onClick={() => handleDeleteExercise(Exercise.exerciseId)}>
                       Delete this Exercise!
                     </Button>
                   </Card.Body>
@@ -108,4 +108,4 @@ const SavedBooks = () => {
   );
 };
 
-export default SavedBooks;
+export default SavedExercises;
