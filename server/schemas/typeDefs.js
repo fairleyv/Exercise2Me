@@ -1,17 +1,16 @@
 const typeDefs = `
-  type userSchema {
+  type User {
     _id: ID
     username: String
     email: String
     password: String
-    savedExercises: [exerciseSchema]!
-    favoriteExercises: [exerciseSchema]!
+    savedExercises: [Exercise]!
+    favoriteExercises: [Exercise]!
   }
 
-  type exerciseSchema {
+  type Exercise {
     _id: ID
     description: String!
-    exerciseId: String!
     image: String
     equipmentNeeded: [String]
     difficulty: String!
@@ -25,16 +24,19 @@ const typeDefs = `
 
 
   type Query {
-    getAllUsers: [userSchema]!
-    getUserById(userId: ID!): userSchema
-    getAllExercises: [exerciseSchema]!
-    getExerciseById(exerciseId: ID!): exerciseSchema
+    getUserById(_id: ID!): User
+    getAllExercises: [Exercise]!
+    getExerciseById(_id: ID!): Exercise
 
   }
 
     type Mutation {
-    addUser(username: String!, email: String!, password: String!): Auth
+    createUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    saveExercise(userId: ID!, exerciseId: ID!): User
+    favoriteExercise(userId: ID!, exerciseId: ID!): User
+    deleteSavedExercise(userId: ID!, exerciseId: ID!): User
+    deleteFavoriteExercise(userId: ID!, exerciseId: ID!): User
   }
 
 `;
