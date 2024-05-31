@@ -12,9 +12,9 @@ export const LOGIN_USER = gql`
 }
 `;
 
-export const ADD_USER = gql`
-    mutation addUser($username: String!, $email: String!, $password: String!) {
-        addUser(username: $username, email: $email, password: $password) {
+export const CREATE_USER = gql`
+    mutation createUser($username: String!, $email: String!, $password: String!) {
+        createUser(username: $username, email: $email, password: $password) {
          token
          user {
             _id
@@ -25,8 +25,31 @@ export const ADD_USER = gql`
 `;
 
 export const SAVE_EXERCISE = gql`
-    mutation saveExercise($exerciseData: ExerciseInput!) {
-        saveExercise(exerciseData: $exerciseData) {
+    mutation saveExercises($exerciseData: ExerciseInput!) {
+        saveExercises(exerciseData: $exerciseData) {
+            _id
+            username
+            email
+            savedExercises {
+                exerciseId
+                exerciseName
+                equipmentNeeded
+                description
+                difficulty
+                image
+                group {
+                    exerciseName
+                    description
+                }
+            }
+        }
+    }
+`;
+// TODO Add Favorite Exercise
+
+export const REMOVE_EXERCISE = gql`
+    mutation deleteSavedExercise($exerciseId: ID!) {
+        deleteSavedExercise(exerciseId: $exerciseId) {
             _id
             username
             email
@@ -46,24 +69,4 @@ export const SAVE_EXERCISE = gql`
     }
 `;
 
-export const REMOVE_EXERCISE =gql`
-    mutation removeExercise($exerciseId: ID!) {
-        removeExercise(exerciseId: $exerciseId) {
-            _id
-            username
-            email
-            savedExercises {
-                exerciseId
-                exerciseName
-                equipmentNeeded
-                description
-                difficulty
-                image
-                group {
-                    exerciseName
-                    description
-                }
-            }
-        }
-    }
-`;
+// TODO Delete favorite exercise
