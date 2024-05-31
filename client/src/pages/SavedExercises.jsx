@@ -6,7 +6,7 @@ import {
   Row,
   Col
 } from 'react-bootstrap';
-
+// TODO change paths to queries and mutations
 import { getMe, deleteExercise } from '../utils/API';
 import Auth from '../utils/auth';
 import { removeExerciseId } from '../utils/localStorage';
