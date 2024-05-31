@@ -107,6 +107,7 @@ const SearchExercises = () => {
         <option value='upper'>Upper Body</option>
         <option value='lower'>Lower Body</option>
         <option value='cardio'>Cardio</option>
+        <option value='core'>Core</option>
       </Form.Control>
               </Col>
               <Col xs={12} md={4}>
