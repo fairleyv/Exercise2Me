@@ -103,7 +103,7 @@ const SearchExercises = () => {
         size='lg'
         placeholder='Find your exercise'
       >
-        <option value="" disabled selected>Select An Exercise Type</option>
+        <option value="" disabled >Select An Exercise Type</option>
         <option value='upper'>Upper Body</option>
         <option value='lower'>Lower Body</option>
         <option value='cardio'>Cardio</option>
