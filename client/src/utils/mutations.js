@@ -25,8 +25,8 @@ export const CREATE_USER = gql`
 `;
 
 export const SAVE_EXERCISE = gql`
-    mutation saveExercises($exerciseData: ExerciseInput!) {
-        saveExercises(exerciseData: $exerciseData) {
+    mutation saveExercise($exerciseData: ExerciseInput!) {
+        saveExercise(exerciseData: $exerciseData) {
             _id
             username
             email
