@@ -15,12 +15,12 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client = {client}>
-      <mantineProvider>
-      <Navbar />
-      <Outlet />
-      <Demo />
-      </mantineProvider>
-    <ApolloProvider/>,
+      <MantineProvider>
+        <Navbar />
+        <Outlet />
+        <Demo />
+      </MantineProvider>
+    </ApolloProvider>,
     document.getElementById('root')
   );
 }
