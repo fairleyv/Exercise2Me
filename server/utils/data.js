@@ -1,11 +1,13 @@
 const users = [
     // example data
-    {
+    {   
+        "id": "123",
         "username": "lernantino",
         "email": "lernantino@gmail.com",
         "password": "lernantino111000"
     },
     {
+        "id": "1234",
         "username": "mabs5025",
         "email": "mabs5025@gmail.com",
         "password": "mabs242424"

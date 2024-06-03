@@ -45,9 +45,30 @@ export const SAVE_EXERCISE = gql`
         }
     }
 `;
-// TODO Add Favorite Exercise
 
-export const REMOVE_EXERCISE = gql`
+export const FAVORITE_EXERCISE = gql`
+    mutation favoriteExercise($exerciseData: ExerciseInput!) {
+        favoriteExercise(exerciseData: $exerciseData) {
+            _id
+            username
+            email
+            favoriteExercises {
+                exerciseId
+                exerciseName
+                equipmentNeeded
+                description
+                difficulty
+                image
+                group {
+                    exerciseName
+                    description
+                }
+            }
+        }
+    }
+`;
+
+export const DELETE_SAVED_EXERCISE = gql`
     mutation deleteSavedExercise($exerciseId: ID!) {
         deleteSavedExercise(exerciseId: $exerciseId) {
             _id
@@ -69,4 +90,24 @@ export const REMOVE_EXERCISE = gql`
     }
 `;
 
-// TODO Delete favorite exercise
+export const DELETE_FAVORITE_EXERCISE = gql`
+    mutation deleteFavoriteExercise($exerciseId: ID!) {
+        deleteFavoriteExercise(exerciseId: $exerciseId) {
+            _id
+            username
+            email
+            favoriteExercises {
+                exerciseId
+                exerciseName
+                equipmentNeeded
+                description
+                difficulty
+                image
+                group {
+                    exerciseName
+                    description
+                }
+            }
+        }
+    }
+`;
