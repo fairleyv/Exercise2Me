@@ -1,6 +1,9 @@
 import { Grid, Container } from '@mantine/core';
 
 import { ExerciseCard } from './ExerciseCard';
+import { ExerciseList } from './ExerciseList';
+
+import classes from './Grid.module.css';
 
 
 export default function Demo() {
@@ -8,7 +11,7 @@ export default function Demo() {
     <>
     <Grid justify="space-around">
       <Grid.Col span={{ base: 12, md: 5}}>
-        <Container fluid> Hello </Container>
+        <Container fluid><ExerciseList></ExerciseList></Container>
         </Grid.Col>
 
       <Grid.Col span={{ base: 12, md: 5}}>
