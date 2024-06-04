@@ -20,7 +20,7 @@ const exercises = [
         "difficulty": "Beginner",
         "image": "",
         "group": {
-            "exerciseName": "upper",
+            "groupName": "upper",
             "description": "These exercise help to tone your arms and shoulders. They increase your upper body strength."
         },
     },
@@ -31,7 +31,7 @@ const exercises = [
         "difficulty": "Intermediate",
         "image": "",
         "group": {
-            "exerciseName": "upper",
+            "groupName": "upper",
             "description": "These exercise help to tone your arms and shoulders. They increase your upper body strength."
         },
     },
@@ -42,7 +42,7 @@ const exercises = [
         "difficulty": "Intermediate",
         "image": "",
         "group": {
-            "exerciseName": "upper",
+            "groupName": "upper",
             "description": "These exercise help to tone your arms and shoulders. They increase your upper body strength."
         },
     },
@@ -53,7 +53,7 @@ const exercises = [
         "difficulty": "Beginner",
         "image": "",
         "group": {
-            "exerciseName": "lower",
+            "groupName": "lower",
             "description": "These exercises help to strengthen your glutes, quadriceps, hamstrings, and calves."
         }
     },
@@ -64,7 +64,7 @@ const exercises = [
         "difficulty": "Beginner",
         "image": "",
         "group": {
-            "exerciseName": "lower",
+            "groupName": "lower",
             "description": "These exercises help to strengthen your glutes, quadriceps, hamstrings, and calves."
         }
     },
@@ -75,7 +75,7 @@ const exercises = [
         "difficulty": "Beginner",
         "image": "",
         "group": {
-            "exerciseName": "lower",
+            "groupName": "lower",
             "description": "These exercises help to strengthen your glutes, quadriceps, hamstrings, and calves."
         }
     },
@@ -86,7 +86,7 @@ const exercises = [
         "difficulty": "Intermediate",
         "image": "",
         "group": {
-            "exerciseName": "core",
+            "groupName": "core",
             "description": "These exercises strengthen your back and core, reducing back pain. They help improve your posture, balance, flexibility, and stability."
         }
     },
@@ -97,7 +97,7 @@ const exercises = [
         "difficulty": "Beginner",
         "image": "",
         "group": {
-            "exerciseName": "core",
+            "groupName": "core",
             "description": "These exercises strengthen your back and core, reducing back pain. They help improve your posture, balance, flexibility, and stability."
         }
     },
@@ -108,7 +108,7 @@ const exercises = [
         "difficulty": "Intermediate",
         "image": "",
         "group": {
-            "exerciseName": "core",
+            "groupName": "core",
             "description": "These exercises strengthen your back and core, reducing back pain. They help improve your posture, balance, flexibility, and stability."
         }
     },
@@ -119,7 +119,7 @@ const exercises = [
         "difficulty": "Intermediate",
         "image": "",
         "group": {
-            "exerciseName": "cardio",
+            "groupName": "cardio",
             "description": "These exercises help get your heart rate up and your blood pumping, strengthening your heart. They help burn fat, increase lung capacity, and increase your bone density. Cardio also helps relieve stress."
         }
     },
@@ -130,7 +130,7 @@ const exercises = [
         "difficulty": "Intermediate",
         "image": "",
         "group": {
-            "exerciseName": "cardio",
+            "groupName": "cardio",
             "description": "These exercises help get your heart rate up and your blood pumping, strengthening your heart. They help burn fat, increase lung capacity, and increase your bone density. Cardio also helps relieve stress."
         }
     },
@@ -141,7 +141,7 @@ const exercises = [
         "difficulty": "Intermediate",
         "image": "",
         "group": {
-            "exerciseName": "cardio",
+            "groupName": "cardio",
             "description": "These exercises help get your heart rate up and your blood pumping, strengthening your heart. They help burn fat, increase lung capacity, and increase your bone density. Cardio also helps relieve stress."
         }
     },

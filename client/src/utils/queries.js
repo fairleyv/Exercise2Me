@@ -38,3 +38,7 @@ export const QUERY_EXERCISE = gql`
     }
 }
 `;
+
+export const GET_EXERCISE_BY_GROUP = gql `
+
+`
