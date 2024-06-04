@@ -11,12 +11,19 @@
   
   .like {
     color: var(--mantine-color-red-6);
-    width: rem(20px);
-    height: rem(20px);
   }
   
   .label {
     text-transform: uppercase;
     font-size: var(--mantine-font-size-xs);
     font-weight: 700;
+  }
+
+  .iconContainer {
+    border-top: 1px solid grey;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 20px; /* Adjust margin as needed */
   }
