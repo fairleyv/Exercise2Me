@@ -7,14 +7,14 @@ import {
 } from 'react-bootstrap';
 
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_ME } from '../utils/queries';
-import { REMOVE_EXERCISE } from '../utils/mutations';
-import { removeExerciseId } from '../utils/localStorage';
+import { QUERY_GET_USER_BY_ID } from '../utils/queries';
+import { DELETE_SAVED_EXERCISE } from '../utils/mutations';
+import { deleteSavedExerciseId } from '../utils/localStorage';
 import Auth from '../utils/auth';
 
 const SavedExercises = () => {
-  const { loading, data } = useQuery(QUERY_ME);
-  const [removeExercise, { error }] = useMutation(REMOVE_EXERCISE);
+  const { loading, data } = useQuery(QUERY_GET_USER_BY_ID);
+  const  [deleteSavedExercise, { error }] = useMutation(DELETE_SAVED_EXERCISE);
 
   const userData = data?.me || {};
 
@@ -27,12 +27,12 @@ const SavedExercises = () => {
     }
 
     try {
-      const { data } = await removeExercise({
+      const { data } = await deleteSavedExercise({
         variables: { exerciseId },
       });
 
-      // upon success, remove exercise's id from localStorage
-      removeExerciseId(exerciseId);
+      // upon success, delete exercise's id from localStorage
+     deleteSavedExerciseId(exerciseId);
     } catch (err) {
       console.error(err);
     }
@@ -67,7 +67,7 @@ const SavedExercises = () => {
                     <p className='small'>Equipment: {exercise.equipmentNeeded}</p>
                     <Card.Text>{exercise.description}</Card.Text>
                     <Button className='btn-block btn-danger' onClick={() => handleDeleteExercise(exercise.exerciseId)}>
-                      Remove this Exercise!
+                     delete this Exercise!
                     </Button>
                   </Card.Body>
                 </Card>
