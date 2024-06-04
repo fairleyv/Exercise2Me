@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_GET_USER_BY_ID = gql`
+export const QUERY_ME = gql`
 {
-    getUserById {
+    me {
         _id
         username
         email
@@ -17,23 +17,6 @@ export const QUERY_GET_USER_BY_ID = gql`
                 exerciseName
                 description
             }
-        }
-    }
-}
-`;
-
-export const QUERY_GET_ALL_EXERCISES = gql`
-{
-    getAllExercises {
-        _id
-        exerciseName
-        equipmentNeeded
-        description
-        difficulty
-        image
-        group {
-            exerciseName
-            description
         }
     }
 }
