@@ -17,7 +17,7 @@ const typeDefs = `
     _id: ID
     description: String!
     image: String
-    equipmentNeeded: [String]
+    equipmentNeeded: String!
     difficulty: String!
     exerciseName: String!
     group: [Group]!

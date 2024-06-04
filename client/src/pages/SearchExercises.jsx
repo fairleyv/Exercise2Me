@@ -60,6 +60,7 @@ const SearchExercises = () => {
       })
       // TODO
       console.log(exerciseData);
+      // console.log(exerciseData.description);
 
       if (loading) {
         return <div>Loading...</div>;
@@ -67,11 +68,12 @@ const SearchExercises = () => {
       if (queryError) {
         return <div>Error...</div>;
       }
-      const exerciseDataFormatted = exerciseData.map((exercise) => ({
+      const exerciseDataFormatted = exerciseData.content.map((exercise) => ({
         exerciseId: exercise.id,
         equipmentNeeded: exercise.equipmentNeeded || ['No equipment to display'],
         exerciseName: exercise.exerciseName,
         description: exercise.description,
+        difficulty: exercise.difficulty,
         image: exercise.imageLinks?.thumbnail || '',
       }));
 

@@ -32,7 +32,7 @@ export const QUERY_GET_ALL_EXERCISES = gql`
         difficulty
         image
         group {
-            exerciseName
+            groupName
             description
         }
     }
