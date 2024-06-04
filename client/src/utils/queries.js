@@ -40,5 +40,18 @@ export const QUERY_EXERCISE = gql`
 `;
 
 export const GET_EXERCISE_BY_GROUP = gql `
-
+query Query($groupName: String!) {
+  getExerciseByGroup(groupName: $groupName) {
+    _id
+    description
+    image
+    equipmentNeeded
+    difficulty
+    exerciseName
+    group {
+      groupName
+      description
+    }
+  }
+}
 `
