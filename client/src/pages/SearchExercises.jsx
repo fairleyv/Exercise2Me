@@ -9,14 +9,14 @@ import {
   Row
 } from 'react-bootstrap';
 
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 import { SAVE_EXERCISE } from '../utils/mutations';
-import { QUERY_GET_ALL_EXERCISES } from '../utils/queries';
+import { GET_EXERCISE_BY_GROUP } from '../utils/queries';
 import { saveExerciseIds, getSavedExerciseIds } from '../utils/localStorage';
 
 const SearchExercises = () => {
+
   // create state for holding returned google api data
   const [searchedExercises, setSearchedExercises] = useState([]);
   // create state for holding our search field data
@@ -27,11 +27,16 @@ const SearchExercises = () => {
 
   const [saveExercise, { error }] = useMutation(SAVE_EXERCISE);
 
+  const [getExerciseByGroup, { loading, error:queryError, data:exerciseData }] = useLazyQuery(GET_EXERCISE_BY_GROUP, {
+        variables: { groupName: searchInput },
+      });
+
   // set up useEffect hook to save `savedExerciseIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => saveExerciseIds(savedExerciseIds);
-  });
+  },[savedExerciseIds]);
+
 
   // create method to search for Exercises and set state on form submit
   const HandleFormSubmit = (event) => {
@@ -41,30 +46,33 @@ const SearchExercises = () => {
       return false;
     }
   // TODO how to search in database
-    try {
-      const { exerciseId } = useParams();
-      
-      const { loading, data } = useQuery(QUERY_GET_ALL_EXERCISES, {
-        variables: { exerciseId: exerciseId },
+    try {      
+      console.log(searchInput);
+      getExerciseByGroup({
+        variables: {groupName: searchInput}
       });
-
-      const exercise = data?.exercise || {};
 
       if (loading) {
         return <div>Loading...</div>;
       }
 
-      const { items } = response.json();
+      if (queryError) {
+        return <div>error...</div>;
+      }
 
-      const exerciseData = items.map((exercise) => ({
-        exerciseId: exercise.id,
-        equipmentNeeded: exercise.volumeInfo.equipmentNeeded || ['No equipment to display'],
-        exerciseName: exercise.volumeInfo.exerciseName,
-        description: exercise.volumeInfo.description,
-        image: exercise.volumeInfo.imageLinks?.thumbnail || '',
+      console.log(exerciseData);
+
+      const exerciseDataFormatted = exerciseData.getExerciseByGroup.map((exercise) => ({
+        exerciseId: exercise._id,
+        description: exercise.description,
+        image: exercise.image || '',
+        equipmentNeeded: exercise.equipmentNeeded || ['No equipment to display'],
+        difficulty: exercise.difficulty,
+        exerciseName: exercise.exerciseName,
+        group: exercise.group.groupName
       }));
 
-      setSearchedExercises(exerciseData);
+      setSearchedExercises(exerciseDataFormatted);
       setSearchInput('');
     } catch (err) {
       console.error(err);
@@ -145,7 +153,7 @@ const SearchExercises = () => {
                     <Card.Img src={exercise.image} alt={`The cover for ${exercise.name}`} variant='top' />
                   ) : null}
                   <Card.Body>
-                    <Card.Title>{exercise.name}</Card.Title>
+                    <Card.Title>{exercise.exerciseName}</Card.Title>
                     <p className='small'>Equipment: {exercise.equipmentNeeded}</p>
                     <Card.Text>{exercise.description}</Card.Text>
                     {Auth.loggedIn() && (

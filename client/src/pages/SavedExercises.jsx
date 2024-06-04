@@ -13,9 +13,12 @@ import { deleteSavedExerciseId } from '../utils/localStorage';
 import Auth from '../utils/auth';
 
 const SavedExercises = () => {
-  const { loading, data } = useQuery(QUERY_GET_USER_BY_ID);
-  const  [deleteSavedExercise, { error }] = useMutation(DELETE_SAVED_EXERCISE);
+  const { loading, error, data } = useQuery(QUERY_GET_USER_BY_ID);
+  const  [deleteSavedExercise] = useMutation(DELETE_SAVED_EXERCISE);
 
+  if (loading) return <h2>LOADING...</h2>;
+  if (error) return <Alert variant='danger'>Error loading data!</Alert>;
+  
   const userData = data?.me || {};
 
   // create function that accepts the Exercise's mongo _id value as param and deletes the Exercise from the database

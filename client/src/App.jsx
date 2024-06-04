@@ -20,8 +20,7 @@ function App() {
         <Outlet />
         <Demo />
       </MantineProvider>
-    </ApolloProvider>,
-    document.getElementById('root')
+    </ApolloProvider>
   );
 }
 
