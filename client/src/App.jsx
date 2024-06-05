@@ -6,7 +6,13 @@ import Navbar from './components/Navbar';
 import Demo from './components/mantine/Grid';
 import { ExerciseProvider } from './context/exerciseContext';
 import { MantineProvider } from '@mantine/core';
+import { ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
 import '@mantine/core/styles.css';
+
+const client = new ApolloClient({
+  uri: '/graphql',
+  cache: new InMemoryCache(),
+});
 
 function App() {
   return (
