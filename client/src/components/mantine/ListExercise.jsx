@@ -25,6 +25,9 @@ export function ListExercise() {
           ref={provided.innerRef}
         >
           {/* <Text className={classes.image}>{item.image}</Text> */}
+          <div style={{ padding: '10px', width: '100%', display: 'flex', alignItems: 'center' }}>
+            <Text weight={500} size="lg" style={{ marginRight: '20px' }}>{index + 1}</Text> {/* Rank displayed based on current index */}
+            
           <div style={{ //border color and size styling
             border: '1px solid black',
             padding: '10px',
@@ -37,13 +40,14 @@ export function ListExercise() {
             </Text>
           </div>
         </div>
+        </div>
       )}
     </Draggable>
   ));
 
   return (
     <DragDropContext
-      onDragEnd={({ destination, source }) =>
+      onDragEnd={({ destination, source }) => 
         handlers.reorder({ from: source.index, to: destination?.index || 0 })
       }
     >
