@@ -18,20 +18,14 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <MantineProvider>
-
-        <ExerciseProvider>
-
+          <ExerciseProvider>
         <Navbar />
         <Outlet />
 
         <Demo />
-
-        </ExerciseProvider>
-
+          </ExerciseProvider>
       </MantineProvider>
-
     </ApolloProvider>
-
   );
 }
 

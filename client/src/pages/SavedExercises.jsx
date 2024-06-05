@@ -12,10 +12,13 @@ import Auth from '../utils/auth';
 import { removeExerciseId } from '../utils/localStorage';
 
 const SavedExercises = () => {
-  const [userData, setUserData] = useState({});
+  const { loading, error, data } = useQuery(QUERY_GET_USER_BY_ID);
+  const  [deleteSavedExercise] = useMutation(DELETE_SAVED_EXERCISE);
 
-   setUserData(data?.user || {});
-
+  if (loading) return <h2>LOADING...</h2>;
+  if (error) return <Alert variant='danger'>Error loading data!</Alert>;
+  
+  const userData = data?.me || {};
 
   // create function that accepts the Exercise's mongo _id value as param and deletes the Exercise from the database
   const handleDeleteExercise = async (exerciseId) => {
@@ -65,6 +68,7 @@ const SavedExercises = () => {
           {userData.savedExercises.map((Exercise) => {
             return (
               <Col md="4">
+
                 <Card key={Exercise.exerciseId} border='dark'>
                   {Exercise.image ? <Card.Img src={Exercise.image} alt={`${Exercise.name}`} variant='top' /> : null}
                   <Card.Body>
