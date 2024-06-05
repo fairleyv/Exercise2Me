@@ -2,21 +2,21 @@ import cx from 'clsx';
 import { Text } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
-import classes from './DndList.module.css';
+import classes from './ListExercise.module.css';
 
 const data = [
-  { position: 6, mass: 12.011, symbol: 'C', name: 'Carbon' },
-  { position: 7, mass: 14.007, symbol: 'N', name: 'Nitrogen' },
-  { position: 39, mass: 88.906, symbol: 'Y', name: 'Yttrium' },
-  { position: 56, mass: 137.33, symbol: 'Ba', name: 'Barium' },
-  { position: 58, mass: 140.12, symbol: 'Ce', name: 'Cerium' },
+  { difficulty: "Easy", equipmentNeeded: "dumbell", image: 'C', ExerciseName: 'Bicep Curls' },
+  { difficulty: "Intermediate", equipmentNeeded: "kettlebell", image: 'N', ExerciseName: 'Lateral Raises' },
+  { difficulty: "Intermediate", equipmentNeeded: "ropes", image: 'Y', ExerciseName: 'Alternating Waves' },
+  { difficulty: "Hard", equipmentNeeded: "Pullup Bar", image: 'Ba', ExerciseName: 'Pull Ups' },
+  { difficulty: "Easy", equipmentNeeded: "None", image: 'Ce', ExerciseName: 'Pushups' },
 ];
 
 export function ListExercise() {
   const [state, handlers] = useListState(data);
 
   const items = state.map((item, index) => (
-    <Draggable key={item.symbol} index={index} draggableId={item.symbol}>
+    <Draggable key={item.image} index={index} draggableId={item.image}>
       {(provided, snapshot) => (
         <div
           className={cx(classes.item, { [classes.itemDragging]: snapshot.isDragging })}
@@ -24,11 +24,16 @@ export function ListExercise() {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <Text className={classes.symbol}>{item.symbol}</Text>
-          <div>
-            <Text>{item.name}</Text>
+          {/* <Text className={classes.image}>{item.image}</Text> */}
+          <div style={{ //border color and size styling
+            border: '1px solid black',
+            padding: '10px',
+            borderRadius: '5px',
+            width: '100%'
+        }}>
+            <Text size="xl">{item.ExerciseName}</Text>
             <Text c="dimmed" size="sm">
-              Position: {item.position} • Mass: {item.mass}
+              Difficulty Level: {item.difficulty} • Equipment Needed: {item.equipmentNeeded}
             </Text>
           </div>
         </div>
