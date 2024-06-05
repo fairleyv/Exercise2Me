@@ -9,7 +9,7 @@ import classes from './Grid.module.css';
 export default function Demo() {
   return (
     <>
-    <Grid justify="space-around">
+    <Grid className={classes.list} justify="space-around">
       <Grid.Col span={{ base: 12, md: 5}}>
         <Container fluid><ExerciseList></ExerciseList></Container>
         </Grid.Col>

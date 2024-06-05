@@ -121,11 +121,11 @@ const SearchExercises = () => {
       </div>
 
       <Container>
-        <h2 className='pt-5'>
+        {/* <h2 className='pt-5'>
           {searchedExercises.length
             ? `Viewing ${searchedExercises.length} results:`
             : 'Choose type of exercise to begin'}
-        </h2>
+        </h2> */}
         <Row>
           {searchedExercises.map((Exercise) => {
             return (
