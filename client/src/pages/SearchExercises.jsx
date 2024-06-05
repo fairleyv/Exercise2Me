@@ -1,5 +1,7 @@
+
 import Auth from '../utils/auth';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+
 import {
   Container,
   Col,
@@ -9,80 +11,54 @@ import {
   Row
 } from 'react-bootstrap';
 
-import { useLazyQuery } from '@apollo/client';
+
 import { useMutation } from '@apollo/client';
 import { SAVE_EXERCISE } from '../utils/mutations';
-import { GET_EXERCISE_BY_GROUP } from '../utils/queries';
 import { saveExerciseIds, getSavedExerciseIds } from '../utils/localStorage';
+import { ExerciseContext } from '../context/exerciseContext';
+
 
 const SearchExercises = () => {
-
-  // create state for holding returned google api data
+  const { exerciseSearch, groupSearchFormatted } = useContext(ExerciseContext);
+  // create state for holding returned exercise data
   const [searchedExercises, setSearchedExercises] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
 
+
   // create state to hold saved ExerciseId values
   const [savedExerciseIds, setSavedExerciseIds] = useState(getSavedExerciseIds());
 
-  const [saveExercise, { error }] = useMutation(SAVE_EXERCISE);
-
-  const [getExerciseByGroup, { loading, error:queryError, data:exerciseData }] = useLazyQuery(GET_EXERCISE_BY_GROUP, {
-        variables: { groupName: searchInput },
-      });
+  const [saveExercise, { loading: mutationLoading, error: mutationError }] = useMutation(SAVE_EXERCISE);
 
   // set up useEffect hook to save `savedExerciseIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => saveExerciseIds(savedExerciseIds);
-  },[savedExerciseIds]);
-
+  }, [savedExerciseIds]);
 
   // create method to search for Exercises and set state on form submit
-  const HandleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     if (!searchInput) {
       return false;
     }
-  // TODO how to search in database
-    try {      
-      console.log(searchInput);
-      getExerciseByGroup({
-        variables: {groupName: searchInput}
-      });
 
-      if (loading) {
-        return <div>Loading...</div>;
-      }
+    // how to search in database
 
-      if (queryError) {
-        return <div>error...</div>;
-      }
+    exerciseSearch(searchInput);   
+    
 
-      console.log(exerciseData);
+    setSearchedExercises(groupSearchFormatted);
+    setSearchInput('');
 
-      const exerciseDataFormatted = exerciseData.getExerciseByGroup.map((exercise) => ({
-        exerciseId: exercise._id,
-        description: exercise.description,
-        image: exercise.image || '',
-        equipmentNeeded: exercise.equipmentNeeded || ['No equipment to display'],
-        difficulty: exercise.difficulty,
-        exerciseName: exercise.exerciseName,
-        group: exercise.group.groupName
-      }));
-
-      setSearchedExercises(exerciseDataFormatted);
-      setSearchInput('');
-    } catch (err) {
-      console.error(err);
-    }
   };
 
   // create function to handle saving a Exercise to our database
   const handleSaveExercise = async (exerciseId) => {
     // find the Exercise in `searchedExercises` state by the matching id
-    const exerciseToSave = searchedExercises.find((Exercise) => Exercise.exerciseId === exerciseId);
+    const exerciseToSave = searchedExercises.find((exercise) => exercise.exerciseId === exerciseId);
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -92,14 +68,18 @@ const SearchExercises = () => {
     }
 
     try {
-      const response = await saveExercise(exerciseToSave, token);
+      const {data} = await saveExercise({
+        variables: { ...exerciseToSave, token}
+      });
 
-      if (!response.ok) {
+      console.log(data);
+
+      if (mutationError) {
         throw new Error('something went wrong!');
       }
 
       // if Exercise successfully saves to user's account, save Exercise id to state
-      setSavedExerciseIds([...savedExerciseIds, exerciseToSave.exerciseId]);
+      setSavedExerciseIds([...savedExerciseIds, data.saveExercise.exerciseId]);
     } catch (err) {
       console.error(err);
     }
@@ -110,23 +90,23 @@ const SearchExercises = () => {
       <div className="text-light bg-dark p-5">
         <Container>
           <h1>Search Exercises</h1>
-          <Form onSubmit={HandleFormSubmit}>
+          <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>
-              <Form.Control
-        as='select'
-        name='searchInput'
-        value={searchInput}
-        onChange={(e) => setSearchInput(e.target.value)}
-        size='lg'
-        placeholder='Find your exercise'
-      >
-        <option value="" disabled >Select An Exercise Type</option>
-        <option value='upper'>Upper Body</option>
-        <option value='lower'>Lower Body</option>
-        <option value='cardio'>Cardio</option>
-        <option value='core'>Core</option>
-      </Form.Control>
+                <Form.Control
+                  as='select'
+                  name='searchInput'
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  size='lg'
+                  placeholder='Find your exercise'
+                >
+                  <option value="" disabled >Select An Exercise Type</option>
+                  <option value='upper'>Upper Body</option>
+                  <option value='lower'>Lower Body</option>
+                  <option value='cardio'>Cardio</option>
+                  <option value='core'>Core</option>
+                </Form.Control>
               </Col>
               <Col xs={12} md={4}>
                 <Button type='submit' variant='success' size='lg'>
@@ -139,29 +119,29 @@ const SearchExercises = () => {
       </div>
 
       <Container>
-        <h2 className='pt-5'>
+        {/* <h2 className='pt-5'>
           {searchedExercises.length
             ? `Viewing ${searchedExercises.length} results:`
             : 'Choose type of exercise to begin'}
-        </h2>
+        </h2> */}
         <Row>
-          {searchedExercises.map((exercise) => {
+          {searchedExercises.map((Exercise) => {
             return (
-              <Col md="4" key={exercise.exerciseId}>
+              <Col md="4" key={Exercise.exerciseId}>
                 <Card border='dark'>
-                  {exercise.image ? (
-                    <Card.Img src={exercise.image} alt={`The cover for ${exercise.name}`} variant='top' />
+                  {Exercise.image ? (
+                    <Card.Img src={Exercise.image} alt={`The cover for ${Exercise.exerciseName}`} variant='top' />
                   ) : null}
                   <Card.Body>
-                    <Card.Title>{exercise.exerciseName}</Card.Title>
-                    <p className='small'>Equipment: {exercise.equipmentNeeded}</p>
-                    <Card.Text>{exercise.description}</Card.Text>
+                    <Card.Title>{Exercise.exerciseName}</Card.Title>
+                    <p className='small'>Equipment: {Exercise.equipmentNeeded}</p>
+                    <Card.Text>{Exercise.description}</Card.Text>
                     {Auth.loggedIn() && (
                       <Button
-                        disabled={savedExerciseIds?.some((savedExerciseId) => savedExerciseId === exercise.exerciseId)}
+                        disabled={savedExerciseIds?.some((savedExerciseId) => savedExerciseId === Exercise.exerciseId)}
                         className='btn-block btn-info'
-                        onClick={() => handleSaveExercise(exercise.exerciseId)}>
-                        {savedExerciseIds?.some((savedExerciseId) => savedExerciseId === exercise.exerciseId)
+                        onClick={() => handleSaveExercise(Exercise.exerciseId)}>
+                        {savedExerciseIds?.some((savedExerciseId) => savedExerciseId === Exercise.exerciseId)
                           ? 'This Exercise has already been saved!'
                           : 'Save this Exercise!'}
                       </Button>
