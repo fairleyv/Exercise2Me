@@ -5,28 +5,19 @@ import { ExerciseList } from './ExerciseList';
 
 import classes from './Grid.module.css';
 
-import { MyListExercise } from './MyListExercise'
-
-
-
-
 
 export default function Demo() {
   return (
     <>
-
-        {/* <DragDropContext> */}
-    <Grid justify="space-around">
+    <Grid className={classes.list} justify="space-around">
       <Grid.Col span={{ base: 12, md: 5}}>
-
-        <Container fluid> <MyListExercise></MyListExercise> </Container>
+        <Container fluid><ExerciseList></ExerciseList></Container>
         </Grid.Col>
 
       <Grid.Col span={{ base: 12, md: 5}}>
       <Container fluid> <ExerciseCard></ExerciseCard> </Container>
       </Grid.Col>
     </Grid>
-        {/* </DragDropContext> */}
     </>
   );
 }
