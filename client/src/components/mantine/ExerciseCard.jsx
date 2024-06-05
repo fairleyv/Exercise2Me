@@ -1,4 +1,7 @@
+
 import { IconHeart } from '@tabler/icons-react';
+
+import { IconBarbell, IconChartBarPopular } from '@tabler/icons-react';
 import { Card, Image, Text, Group, Badge, Button, ActionIcon } from '@mantine/core';
 import classes from './ExerciseCard.module.css';
 
@@ -8,23 +11,23 @@ const mockdata = {
   title: 'Verudela Beach',
   country: 'Croatia',
   description:
-    'Completely renovated for the season 2020, Arena Verudela Bech Apartments are fully equipped and modernly furnished 4-star self-service apartments located on the Adriatic coastline by one of the most beautiful beaches in Pula.',
-  badges: [
-    { emoji: '☀️', label: 'Sunny weather' },
-    { emoji: '🦓', label: 'Onsite zoo' },
-    { emoji: '🌊', label: 'Sea' },
-    { emoji: '🌲', label: 'Nature' },
-    { emoji: '🤽', label: 'Water sports' },
-  ],
+    'Stand with feet shoulder-width apart, holding dumbbells with arms fully extended and palms facing forward. Keep elbows close to your torso. Curl the weights by contracting your biceps until the dumbbells reach shoulder level, exhaling as you lift. Pause and squeeze your biceps at the top, then slowly lower the dumbbells back while inhaling. Repeat for desired reps. Avoid swinging your body or using momentum.',
+//   badges: [
+//     { emoji: '☀️', label: 'Sunny weather' },
+//     { emoji: '🦓', label: 'Onsite zoo' },
+//     { emoji: '🌊', label: 'Sea' },
+//     { emoji: '🌲', label: 'Nature' },
+//     { emoji: '🤽', label: 'Water sports' },
+//   ],
 };
 
 export function ExerciseCard() {
   const { image, title, description, country, badges } = mockdata;
-  const features = badges.map((badge) => (
-    <Badge variant="light" key={badge.label} leftSection={badge.emoji}>
-      {badge.label}
-    </Badge>
-  ));
+//   const features = badges.map((badge) => (
+//     <Badge variant="light" key={badge.label} leftSection={badge.emoji}>
+//       {badge.label}
+//     </Badge>
+//   ));
 
   return (
     <Card withBorder radius="md" p="md" className={classes.card}>
@@ -46,22 +49,39 @@ export function ExerciseCard() {
         </Text>
       </Card.Section>
 
-      <Card.Section className={classes.section}>
+
+
+      {/* <Card.Section className={classes.section}>
         <Text mt="md" className={classes.label} c="dimmed">
           Perfect for you, if you enjoy
         </Text>
         <Group gap={7} mt={5}>
           {features}
         </Group>
-      </Card.Section>
+      </Card.Section> */}
+
+       
+    <Card.Section className={classes.section}>
+        <div className={classes.iconContainer}>
+            <div>
+                <IconBarbell className={classes.like} stroke={1.5} />
+                <h6>Dumbbells</h6>
+            </div>
+            <div>
+                <IconChartBarPopular className={classes.like} stroke={1.5} />
+                <h6>Easy</h6>
+            </div>
+        </div>
+     </Card.Section>
+       
 
       <Group mt="xs">
         <Button radius="md" style={{ flex: 1 }}>
           Show details
         </Button>
-        <ActionIcon variant="default" radius="md" size={36}>
-          <IconHeart className={classes.like} stroke={1.5} />
-        </ActionIcon>
+        {/* <ActionIcon variant="default" radius="md" size={36}>
+          <IconBarbell className={classes.like} stroke={1.5} />
+        </ActionIcon> */}
       </Group>
     </Card>
   );

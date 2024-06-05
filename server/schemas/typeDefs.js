@@ -8,13 +8,19 @@ const typeDefs = `
     favoriteExercises: [Exercise]!
   }
 
+  type Group {
+    groupName: String!
+    description: String!
+  }
+
   type Exercise {
     _id: ID
     description: String!
     image: String
-    equipmentNeeded: [String]
+    equipmentNeeded: String!
     difficulty: String!
     exerciseName: String!
+    group: [Group]!
   }
 
     type Auth {
@@ -27,6 +33,7 @@ const typeDefs = `
     getUserById(_id: ID!): User
     getAllExercises: [Exercise]!
     getExerciseById(_id: ID!): Exercise
+    getExerciseByGroup(groupName: String!): [Exercise]
 
   }
 

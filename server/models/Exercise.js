@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 // Group subschema to be used in the exerciseSchema
 
 const groupSchema = new Schema({
-  exerciseName: {
+  groupName: {
     type: String,
     required: true,
   },
@@ -22,9 +22,10 @@ const exerciseSchema = new Schema({
   image: {
     type: String,
   },
-  equipmentNeeded: [{
-    type: String
-  }],
+  equipmentNeeded: {
+    type: String,
+    required: true,
+  },
   difficulty: {
     type: String,
     required: true

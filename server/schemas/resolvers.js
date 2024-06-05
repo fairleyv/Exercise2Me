@@ -21,6 +21,12 @@ const resolvers = {
             }
             throw AuthenticationError;
         },
+        getExerciseById: async(parent, {_id }) => {
+            return Exercise.findById(_id);
+        },
+        getExerciseByGroup: async (parent, { groupName }) => {
+            return Exercise.find({ "group.groupName": groupName });
+        }
     },
     Mutation: {
         addUser: async (parent, { username, email, password }) => {

@@ -9,16 +9,23 @@ import {
 } from 'react-bootstrap';
 
 
-import Auth from '../utils/auth';
-// TODO queries and mutations
-import { saveExercise } from '../utils/API';
+import { useParams } from 'react-router-dom';
+import { useLazyQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+import { SAVE_EXERCISE } from '../utils/mutations';
+import { GET_EXERCISE_BY_GROUP } from '../utils/queries';
 import { saveExerciseIds, getSavedExerciseIds } from '../utils/localStorage';
 
 const SearchExercises = () => {
-  // create state for holding returned google api data
+
+  // create state for holding returned exercise data
   const [searchedExercises, setSearchedExercises] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
+  const [getExerciseByGroup, { loading, error: queryError, data: exerciseData }] = useLazyQuery
+    (GET_EXERCISE_BY_GROUP, {
+      variables: { groupName: searchInput },
+    });
 
   // create state to hold saved ExerciseId values
   const [savedExerciseIds, setSavedExerciseIds] = useState(getSavedExerciseIds());
@@ -27,8 +34,16 @@ const SearchExercises = () => {
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => saveExerciseIds(savedExerciseIds);
-  });
-
+  }, [savedExerciseIds]);
+  useEffect(() => {
+    const fetchExercises = async () => {
+      await getExerciseByGroup({
+        variables: { groupName: searchInput }
+      });
+      // console.log(exerciseData)
+    }
+    fetchExercises();  
+  }, []);
   // create method to search for Exercises and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -37,24 +52,32 @@ const SearchExercises = () => {
       return false;
     }
 
+    // TODO how to search in database
     try {
-      const response = await searchExercises(searchInput);
+      getExerciseByGroup({
+        variables: { groupName: searchInput }
+      })
+      // TODO
+      // console.log(exerciseData);
+      console.log(exerciseData.getExerciseByGroup[0].description);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
 
-      const { items } = await response.json();
-
-      const exerciseData = items.map((Exercise) => ({
-        exerciseId: Exercise.id,
-        equipmentNeeded: Exercise.volumeInfo.equipmentNeeded || ['No equipment to display'],
-        name: Exercise.volumeInfo.name,
-        description: Exercise.volumeInfo.description,
-        image: Exercise.volumeInfo.imageLinks?.thumbnail || '',
+      if (queryError) {
+        return <div>Error...</div>;
+      }
+      const exerciseDataFormatted = exerciseData.getExerciseByGroup.map((exercise) => ({
+        exerciseId: exercise.id,
+        equipmentNeeded: exercise.equipmentNeeded || ['No equipment to display'],
+        exerciseName: exercise.exerciseName,
+        description: exercise.description,
+        difficulty: exercise.difficulty,
+        image: exercise.imageLinks?.thumbnail || '',
       }));
 
-      setSearchedExercises(exerciseData);
+      setSearchedExercises(exerciseDataFormatted);
       setSearchInput('');
     } catch (err) {
       console.error(err);
@@ -95,19 +118,20 @@ const SearchExercises = () => {
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>
-              <Form.Control
-        as='select'
-        name='searchInput'
-        value={searchInput}
-        onChange={(e) => setSearchInput(e.target.value)}
-        size='lg'
-        placeholder='Find your exercise'
-      >
-        <option value="" disabled >Select An Exercise Type</option>
-        <option value='upper'>Upper Body</option>
-        <option value='lower'>Lower Body</option>
-        <option value='cardio'>Cardio</option>
-      </Form.Control>
+                <Form.Control
+                  as='select'
+                  name='searchInput'
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  size='lg'
+                  placeholder='Find your exercise'
+                >
+                  <option value="" disabled >Select An Exercise Type</option>
+                  <option value='upper'>Upper Body</option>
+                  <option value='lower'>Lower Body</option>
+                  <option value='cardio'>Cardio</option>
+                  <option value='core'>Core</option>
+                </Form.Control>
               </Col>
               <Col xs={12} md={4}>
                 <Button type='submit' variant='success' size='lg'>
@@ -120,11 +144,11 @@ const SearchExercises = () => {
       </div>
 
       <Container>
-        <h2 className='pt-5'>
+        {/* <h2 className='pt-5'>
           {searchedExercises.length
             ? `Viewing ${searchedExercises.length} results:`
             : 'Choose type of exercise to begin'}
-        </h2>
+        </h2> */}
         <Row>
           {searchedExercises.map((Exercise) => {
             return (

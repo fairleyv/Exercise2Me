@@ -9,7 +9,7 @@ import '@mantine/core/styles.css';
 
 function App() {
   return (
-    
+    <ApolloProvider client={client}>
       <MantineProvider>
         <>
         <Navbar />
@@ -18,6 +18,9 @@ function App() {
         <Demo />
         </>
       </MantineProvider>
+
+    </ApolloProvider>
+
   );
 }
 
