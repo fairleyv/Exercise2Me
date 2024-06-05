@@ -14,6 +14,7 @@ import { removeExerciseId } from '../utils/localStorage';
 const SavedExercises = () => {
   const [userData, setUserData] = useState({});
 
+<<<<<<< Updated upstream
   // use this to determine if `useEffect()` hook needs to run again
   const userDataLength = Object.keys(userData).length;
 
@@ -41,6 +42,10 @@ const SavedExercises = () => {
 
     getUserData();
   }, [userDataLength]);
+=======
+  const userData = data?.user || {};
+
+>>>>>>> Stashed changes
 
   // create function that accepts the Exercise's mongo _id value as param and deletes the Exercise from the database
   const handleDeleteExercise = async (exerciseId) => {
@@ -90,6 +95,7 @@ const SavedExercises = () => {
           {userData.savedExercises.map((Exercise) => {
             return (
               <Col md="4">
+<<<<<<< Updated upstream
                 <Card key={Exercise.exerciseId} border='dark'>
                   {Exercise.image ? <Card.Img src={Exercise.image} alt={`${Exercise.name}`} variant='top' /> : null}
                   <Card.Body>
@@ -98,6 +104,16 @@ const SavedExercises = () => {
                     <Card.Text>{Exercise.description}</Card.Text>
                     <Button className='btn-block btn-danger' onClick={() => handleDeleteExercise(Exercise.exerciseId)}>
                       Delete this Exercise!
+=======
+                <Card key={exercise._id} border='dark'>
+                  {exercise.image ? <Card.Img src={exercise.image} alt={`${exercise.exerciseName}`} variant='top' /> : null}
+                  <Card.Body>
+                    <Card.Title>{exercise.exerciseName}</Card.Title>
+                    <p className='small'>Equipment: {exercise.equipmentNeeded}</p>
+                    <Card.Text>{exercise.description}</Card.Text>
+                    <Button className='btn-block btn-danger' onClick={() => handleDeleteExercise(exercise.exerciseId)}>
+                     delete this Exercise!
+>>>>>>> Stashed changes
                     </Button>
                   </Card.Body>
                 </Card>

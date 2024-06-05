@@ -31,6 +31,8 @@ const SearchExercises = () => {
   // create state to hold saved ExerciseId values
   const [savedExerciseIds, setSavedExerciseIds] = useState(getSavedExerciseIds());
 
+  const [saveExercise, { loading: mutationLoading, error: mutationError }] = useMutation(SAVE_EXERCISE);
+
   // set up useEffect hook to save `savedExerciseIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
@@ -58,7 +60,7 @@ const SearchExercises = () => {
   // create function to handle saving a Exercise to our database
   const handleSaveExercise = async (exerciseId) => {
     // find the Exercise in `searchedExercises` state by the matching id
-    const exerciseToSave = searchedExercises.find((Exercise) => Exercise.exerciseId === exerciseId);
+    const exerciseToSave = searchedExercises.find((exercise) => exercise.exerciseId === exerciseId);
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -68,14 +70,18 @@ const SearchExercises = () => {
     }
 
     try {
-      const response = await saveExercise(exerciseToSave, token);
+      const {data} = await saveExercise({
+        variables: { ...exerciseToSave, token}
+      });
 
-      if (!response.ok) {
+      console.log(data);
+
+      if (mutationError) {
         throw new Error('something went wrong!');
       }
 
       // if Exercise successfully saves to user's account, save Exercise id to state
-      setSavedExerciseIds([...savedExerciseIds, exerciseToSave.exerciseId]);
+      setSavedExerciseIds([...savedExerciseIds, data.saveExercise.exerciseId]);
     } catch (err) {
       console.error(err);
     }
@@ -125,13 +131,13 @@ const SearchExercises = () => {
             return (
               <Col md="4" key={Exercise.exerciseId}>
                 <Card border='dark'>
-                  {Exercise.image ? (
-                    <Card.Img src={Exercise.image} alt={`The cover for ${Exercise.name}`} variant='top' />
+                  {exercise.image ? (
+                    <Card.Img src={exercise.image} alt={`The cover for ${exercise.exerciseName}`} variant='top' />
                   ) : null}
                   <Card.Body>
-                    <Card.Title>{Exercise.name}</Card.Title>
-                    <p className='small'>Equipment: {Exercise.equipmentNeeded}</p>
-                    <Card.Text>{Exercise.description}</Card.Text>
+                    <Card.Title>{exercise.exerciseName}</Card.Title>
+                    <p className='small'>Equipment: {exercise.equipmentNeeded}</p>
+                    <Card.Text>{exercise.description}</Card.Text>
                     {Auth.loggedIn() && (
                       <Button
                         disabled={savedExerciseIds?.some((savedExerciseId) => savedExerciseId === Exercise.exerciseId)}
