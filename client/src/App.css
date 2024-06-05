@@ -2,6 +2,10 @@ body {
   font-family: "Teko", sans-serif;;
 }
 
+#root {
+  background-color: rgb(232, 234, 234);
+}
+
 h1,
 h2,
 h3,
