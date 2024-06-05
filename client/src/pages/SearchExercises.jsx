@@ -1,7 +1,4 @@
-
-import Auth from '../utils/auth';
-import { useState, useEffect, useContext } from 'react';
-
+import { useState, useEffect } from 'react';
 import {
   Container,
   Col,
@@ -12,21 +9,23 @@ import {
 } from 'react-bootstrap';
 
 
+import { useParams } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 import { SAVE_EXERCISE } from '../utils/mutations';
 import { GET_EXERCISE_BY_GROUP } from '../utils/queries';
 import { saveExerciseIds, getSavedExerciseIds } from '../utils/localStorage';
-import { ExerciseContext } from '../context/exerciseContext';
-
 
 const SearchExercises = () => {
-  const { exerciseSearch, groupSearchFormatted } = useContext(ExerciseContext);
+
   // create state for holding returned exercise data
   const [searchedExercises, setSearchedExercises] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
-
+  const [getExerciseByGroup, { loading, error: queryError, data: exerciseData }] = useLazyQuery
+    (GET_EXERCISE_BY_GROUP, {
+      variables: { groupName: searchInput },
+    });
 
   // create state to hold saved ExerciseId values
   const [savedExerciseIds, setSavedExerciseIds] = useState(getSavedExerciseIds());
@@ -36,7 +35,15 @@ const SearchExercises = () => {
   useEffect(() => {
     return () => saveExerciseIds(savedExerciseIds);
   }, [savedExerciseIds]);
-
+  useEffect(() => {
+    const fetchExercises = async () => {
+      await getExerciseByGroup({
+        variables: { groupName: searchInput }
+      });
+      // console.log(exerciseData)
+    }
+    fetchExercises();  
+  }, []);
   // create method to search for Exercises and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -45,14 +52,36 @@ const SearchExercises = () => {
       return false;
     }
 
-    // how to search in database
+    // TODO how to search in database
+    try {
+      getExerciseByGroup({
+        variables: { groupName: searchInput }
+      })
+      // TODO
+      // console.log(exerciseData);
+      console.log(exerciseData.getExerciseByGroup[0].description);
 
-    exerciseSearch(searchInput);   
-    
+      if (!response.ok) {
+        throw new Error('something went wrong!');
+      }
 
-    setSearchedExercises(groupSearchFormatted);
-    setSearchInput('');
+      if (queryError) {
+        return <div>Error...</div>;
+      }
+      const exerciseDataFormatted = exerciseData.getExerciseByGroup.map((exercise) => ({
+        exerciseId: exercise.id,
+        equipmentNeeded: exercise.equipmentNeeded || ['No equipment to display'],
+        exerciseName: exercise.exerciseName,
+        description: exercise.description,
+        difficulty: exercise.difficulty,
+        image: exercise.imageLinks?.thumbnail || '',
+      }));
 
+      setSearchedExercises(exerciseDataFormatted);
+      setSearchInput('');
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // create function to handle saving a Exercise to our database
