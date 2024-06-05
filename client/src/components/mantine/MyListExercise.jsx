@@ -2,7 +2,7 @@ import cx from 'clsx';
 import { Text } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
-import classes from './ListExercise.module.css';
+import classes from './MyListExercise.module.css';
 
 const data = [
   { difficulty: "Easy", equipmentNeeded: "dumbell", image: 'C', ExerciseName: 'Bicep Curls' },
@@ -12,7 +12,7 @@ const data = [
   { difficulty: "Easy", equipmentNeeded: "None", image: 'Ce', ExerciseName: 'Pushups' },
 ];
 
-export function ListExercise() {
+export function MyListExercise() {
   const [state, handlers] = useListState(data);
 
   const items = state.map((item, index) => (
