@@ -1,3 +1,4 @@
+import Auth from '../utils/auth';
 import { useState, useEffect } from 'react';
 import {
   Container,
@@ -7,7 +8,6 @@ import {
   Card,
   Row
 } from 'react-bootstrap';
-
 
 import { useParams } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
@@ -30,6 +30,8 @@ const SearchExercises = () => {
   // create state to hold saved ExerciseId values
   const [savedExerciseIds, setSavedExerciseIds] = useState(getSavedExerciseIds());
 
+  const [saveExercise, { error }] = useMutation(SAVE_EXERCISE);
+
   // set up useEffect hook to save `savedExerciseIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
@@ -45,13 +47,12 @@ const SearchExercises = () => {
     fetchExercises();  
   }, []);
   // create method to search for Exercises and set state on form submit
-  const handleFormSubmit = async (event) => {
+  const HandleFormSubmit = (event) => {
     event.preventDefault();
 
     if (!searchInput) {
       return false;
     }
-
     // TODO how to search in database
     try {
       getExerciseByGroup({
@@ -61,10 +62,9 @@ const SearchExercises = () => {
       // console.log(exerciseData);
       console.log(exerciseData.getExerciseByGroup[0].description);
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
+      if (loading) {
+        return <div>Loading...</div>;
       }
-
       if (queryError) {
         return <div>Error...</div>;
       }
@@ -115,7 +115,7 @@ const SearchExercises = () => {
       <div className="text-light bg-dark p-5">
         <Container>
           <h1>Search Exercises</h1>
-          <Form onSubmit={handleFormSubmit}>
+          <Form onSubmit={HandleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>
                 <Form.Control
@@ -150,23 +150,23 @@ const SearchExercises = () => {
             : 'Choose type of exercise to begin'}
         </h2> */}
         <Row>
-          {searchedExercises.map((Exercise) => {
+          {searchedExercises.map((exercise) => {
             return (
-              <Col md="4" key={Exercise.exerciseId}>
+              <Col md="4" key={exercise.exerciseId}>
                 <Card border='dark'>
-                  {Exercise.image ? (
-                    <Card.Img src={Exercise.image} alt={`The cover for ${Exercise.name}`} variant='top' />
+                  {exercise.image ? (
+                    <Card.Img src={exercise.image} alt={`The cover for ${exercise.name}`} variant='top' />
                   ) : null}
                   <Card.Body>
-                    <Card.Title>{Exercise.name}</Card.Title>
-                    <p className='small'>Equipment: {Exercise.equipmentNeeded}</p>
-                    <Card.Text>{Exercise.description}</Card.Text>
+                    <Card.Title>{exercise.name}</Card.Title>
+                    <p className='small'>Equipment: {exercise.equipmentNeeded}</p>
+                    <Card.Text>{exercise.description}</Card.Text>
                     {Auth.loggedIn() && (
                       <Button
-                        disabled={savedExerciseIds?.some((savedExerciseId) => savedExerciseId === Exercise.exerciseId)}
+                        disabled={savedExerciseIds?.some((savedExerciseId) => savedExerciseId === exercise.exerciseId)}
                         className='btn-block btn-info'
-                        onClick={() => handleSaveExercise(Exercise.exerciseId)}>
-                        {savedExerciseIds?.some((savedExerciseId) => savedExerciseId === Exercise.exerciseId)
+                        onClick={() => handleSaveExercise(exercise.exerciseId)}>
+                        {savedExerciseIds?.some((savedExerciseId) => savedExerciseId === exercise.exerciseId)
                           ? 'This Exercise has already been saved!'
                           : 'Save this Exercise!'}
                       </Button>

@@ -12,9 +12,9 @@ export const LOGIN_USER = gql`
 }
 `;
 
-export const ADD_USER = gql`
-    mutation addUser($username: String!, $email: String!, $password: String!) {
-        addUser(username: $username, email: $email, password: $password) {
+export const CREATE_USER = gql`
+    mutation createUser($username: String!, $email: String!, $password: String!) {
+        createUser(username: $username, email: $email, password: $password) {
          token
          user {
             _id
@@ -46,13 +46,57 @@ export const SAVE_EXERCISE = gql`
     }
 `;
 
-export const REMOVE_EXERCISE =gql`
-    mutation removeExercise($exerciseId: ID!) {
-        removeExercise(exerciseId: $exerciseId) {
+export const FAVORITE_EXERCISE = gql`
+    mutation favoriteExercise($exerciseData: ExerciseInput!) {
+        favoriteExercise(exerciseData: $exerciseData) {
+            _id
+            username
+            email
+            favoriteExercises {
+                exerciseId
+                exerciseName
+                equipmentNeeded
+                description
+                difficulty
+                image
+                group {
+                    exerciseName
+                    description
+                }
+            }
+        }
+    }
+`;
+
+export const DELETE_SAVED_EXERCISE = gql`
+    mutation deleteSavedExercise($exerciseId: ID!) {
+        deleteSavedExercise(exerciseId: $exerciseId) {
             _id
             username
             email
             savedExercises {
+                exerciseId
+                exerciseName
+                equipmentNeeded
+                description
+                difficulty
+                image
+                group {
+                    exerciseName
+                    description
+                }
+            }
+        }
+    }
+`;
+
+export const DELETE_FAVORITE_EXERCISE = gql`
+    mutation deleteFavoriteExercise($exerciseId: ID!) {
+        deleteFavoriteExercise(exerciseId: $exerciseId) {
+            _id
+            username
+            email
+            favoriteExercises {
                 exerciseId
                 exerciseName
                 equipmentNeeded
