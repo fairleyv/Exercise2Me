@@ -64,9 +64,9 @@ const SavedExercises = () => {
             return (
               <Col md="4">
                 <Card key={exercise.exerciseId} border='dark'>
-                  {exercise.image ? <Card.Img src={exercise.image} alt={`${exercise.name}`} variant='top' /> : null}
+                  {exercise.image ? <Card.Img src={exercise.image} alt={`${exercise.exerciseName}`} variant='top' /> : null}
                   <Card.Body>
-                    <Card.Title>{exercise.name}</Card.Title>
+                    <Card.Title>{exercise.exerciseName}</Card.Title>
                     <p className='small'>Equipment: {exercise.equipmentNeeded}</p>
                     <Card.Text>{exercise.description}</Card.Text>
                     <Button className='btn-block btn-danger' onClick={() => handleDeleteExercise(exercise.exerciseId)}>
