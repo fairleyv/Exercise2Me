@@ -131,13 +131,13 @@ const SearchExercises = () => {
             return (
               <Col md="4" key={Exercise.exerciseId}>
                 <Card border='dark'>
-                  {exercise.image ? (
-                    <Card.Img src={exercise.image} alt={`The cover for ${exercise.exerciseName}`} variant='top' />
+                  {Exercise.image ? (
+                    <Card.Img src={Exercise.image} alt={`The cover for ${Exercise.exerciseName}`} variant='top' />
                   ) : null}
                   <Card.Body>
-                    <Card.Title>{exercise.exerciseName}</Card.Title>
-                    <p className='small'>Equipment: {exercise.equipmentNeeded}</p>
-                    <Card.Text>{exercise.description}</Card.Text>
+                    <Card.Title>{Exercise.exerciseName}</Card.Title>
+                    <p className='small'>Equipment: {Exercise.equipmentNeeded}</p>
+                    <Card.Text>{Exercise.description}</Card.Text>
                     {Auth.loggedIn() && (
                       <Button
                         disabled={savedExerciseIds?.some((savedExerciseId) => savedExerciseId === Exercise.exerciseId)}
