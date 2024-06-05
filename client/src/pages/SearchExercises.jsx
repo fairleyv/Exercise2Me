@@ -12,9 +12,10 @@ import {
 } from 'react-bootstrap';
 
 
-
+import { useLazyQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 import { SAVE_EXERCISE } from '../utils/mutations';
+import { GET_EXERCISE_BY_GROUP } from '../utils/queries';
 import { saveExerciseIds, getSavedExerciseIds } from '../utils/localStorage';
 import { ExerciseContext } from '../context/exerciseContext';
 
