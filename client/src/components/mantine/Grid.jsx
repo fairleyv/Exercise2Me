@@ -5,6 +5,8 @@ import { ExerciseList } from './ExerciseList';
 
 import classes from './Grid.module.css';
 
+import {MyListExercise} from './MyListExercise';
+
 
 export default function Demo() {
   return (
