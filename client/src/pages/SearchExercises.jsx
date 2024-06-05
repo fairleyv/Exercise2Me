@@ -136,7 +136,7 @@ const SearchExercises = () => {
                   ) : null}
                   <Card.Body>
                     <Card.Title>{Exercise.exerciseName}</Card.Title>
-                    <p className='small'>Equipment: {exercise.equipmentNeeded}</p>
+                    <p className='small'>Equipment: {Exercise.equipmentNeeded}</p>
                     <Card.Text>{Exercise.description}</Card.Text>
                     {Auth.loggedIn() && (
                       <Button
