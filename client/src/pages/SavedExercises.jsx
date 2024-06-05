@@ -14,8 +14,38 @@ import { removeExerciseId } from '../utils/localStorage';
 const SavedExercises = () => {
   const [userData, setUserData] = useState({});
 
-   setUserData(data?.user || {});
+<<<<<<< Updated upstream
+  // use this to determine if `useEffect()` hook needs to run again
+  const userDataLength = Object.keys(userData).length;
 
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+        if (!token) {
+          return false;
+        }
+
+        const response = await getMe(token);
+
+        if (!response.ok) {
+          throw new Error('something went wrong!');
+        }
+
+        const user = await response.json();
+        setUserData(user);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    getUserData();
+  }, [userDataLength]);
+=======
+  const userData = data?.user || {};
+
+>>>>>>> Stashed changes
 
   // create function that accepts the Exercise's mongo _id value as param and deletes the Exercise from the database
   const handleDeleteExercise = async (exerciseId) => {
@@ -65,6 +95,7 @@ const SavedExercises = () => {
           {userData.savedExercises.map((Exercise) => {
             return (
               <Col md="4">
+<<<<<<< Updated upstream
                 <Card key={Exercise.exerciseId} border='dark'>
                   {Exercise.image ? <Card.Img src={Exercise.image} alt={`${Exercise.name}`} variant='top' /> : null}
                   <Card.Body>
@@ -73,6 +104,16 @@ const SavedExercises = () => {
                     <Card.Text>{Exercise.description}</Card.Text>
                     <Button className='btn-block btn-danger' onClick={() => handleDeleteExercise(Exercise.exerciseId)}>
                       Delete this Exercise!
+=======
+                <Card key={exercise._id} border='dark'>
+                  {exercise.image ? <Card.Img src={exercise.image} alt={`${exercise.exerciseName}`} variant='top' /> : null}
+                  <Card.Body>
+                    <Card.Title>{exercise.exerciseName}</Card.Title>
+                    <p className='small'>Equipment: {exercise.equipmentNeeded}</p>
+                    <Card.Text>{exercise.description}</Card.Text>
+                    <Button className='btn-block btn-danger' onClick={() => handleDeleteExercise(exercise.exerciseId)}>
+                     delete this Exercise!
+>>>>>>> Stashed changes
                     </Button>
                   </Card.Body>
                 </Card>
