@@ -79,11 +79,11 @@ const SavedExercises = () => {
         </Container>
       </div>
       <Container>
-        <h2 className='pt-5'>
+        {/* <h2 className='pt-5'>
           {userData.savedExercises.length
             ? `Viewing ${userData.savedExercises.length} saved ${userData.savedExercises.length === 1 ? 'exercise' : 'exercises'}:`
             : 'You have no saved exercises!'}
-        </h2>
+        </h2> */}
         <Row>
           {userData.savedExercises.map((Exercise) => {
             return (
