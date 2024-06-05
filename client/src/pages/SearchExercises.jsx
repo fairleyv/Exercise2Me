@@ -42,9 +42,9 @@ const SearchExercises = () => {
       await getExerciseByGroup({
         variables: { groupName: searchInput }
       });
-      console.log(exerciseData)
+      // console.log(exerciseData)
     }
-    fetchExercises();
+    fetchExercises();  
   }, []);
   // create method to search for Exercises and set state on form submit
   const HandleFormSubmit = (event) => {
@@ -59,8 +59,8 @@ const SearchExercises = () => {
         variables: { groupName: searchInput }
       })
       // TODO
-      console.log(exerciseData);
-      // console.log(exerciseData.description);
+      // console.log(exerciseData);
+      console.log(exerciseData.getExerciseByGroup[0].description);
 
       if (loading) {
         return <div>Loading...</div>;
@@ -68,7 +68,7 @@ const SearchExercises = () => {
       if (queryError) {
         return <div>Error...</div>;
       }
-      const exerciseDataFormatted = exerciseData.content.map((exercise) => ({
+      const exerciseDataFormatted = exerciseData.getExerciseByGroup.map((exercise) => ({
         exerciseId: exercise.id,
         equipmentNeeded: exercise.equipmentNeeded || ['No equipment to display'],
         exerciseName: exercise.exerciseName,
