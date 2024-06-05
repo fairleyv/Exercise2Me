@@ -3,7 +3,6 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
     Query: {
-<<<<<<< Updated upstream
         getAllUsers: async () => {
             return User.find().populate('users');
         },
@@ -21,25 +20,10 @@ const resolvers = {
                 return User.findOne({ _id: context.user._id }).populate('savedExercises');
             }
             throw AuthenticationError;
-=======
-        getAllUsers: async(parent, {}) => {
-            return await User.find({});
         },
-
-        getUserById: async (parent, { username }) => {
-            const user = await User.findOne({ $or: [{ username }, { _id: username }] }).populate('savedExercises').populate('favoriteExercises');
-            return user;
-        },      
-
-        getAllExercises: async (parent, {}) => {
-            return Exercise.find();
->>>>>>> Stashed changes
-        },
-
         getExerciseById: async(parent, {_id }) => {
             return Exercise.findById(_id);
         },
-
         getExerciseByGroup: async (parent, { groupName }) => {
             return Exercise.find({ "group.groupName": groupName });
         }

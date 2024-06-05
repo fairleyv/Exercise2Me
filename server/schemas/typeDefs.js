@@ -30,7 +30,6 @@ const typeDefs = `
 
 
   type Query {
-    getAllUsers: [User]!
     getUserById(_id: ID!): User
     getAllExercises: [Exercise]!
     getExerciseById(_id: ID!): Exercise
