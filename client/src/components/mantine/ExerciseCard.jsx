@@ -1,4 +1,5 @@
-// import { IconHeart } from '@tabler/icons-react';
+
+import { IconHeart } from '@tabler/icons-react';
 
 import { IconBarbell, IconChartBarPopular } from '@tabler/icons-react';
 import { Card, Image, Text, Group, Badge, Button, ActionIcon } from '@mantine/core';
@@ -6,9 +7,9 @@ import classes from './ExerciseCard.module.css';
 
 const mockdata = {
   image:
-    'https://steelsupplements.com/cdn/shop/articles/shutterstock_657941434_376ae0c9-1a39-42d3-bc39-3eaf18d5038f_1000x.jpg?v=1641548776',
-  title: 'Biceps curl',
-  country: 'Upper Body',
+    'https://images.unsplash.com/photo-1437719417032-8595fd9e9dc6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80',
+  title: 'Verudela Beach',
+  country: 'Croatia',
   description:
     'Stand with feet shoulder-width apart, holding dumbbells with arms fully extended and palms facing forward. Keep elbows close to your torso. Curl the weights by contracting your biceps until the dumbbells reach shoulder level, exhaling as you lift. Pause and squeeze your biceps at the top, then slowly lower the dumbbells back while inhaling. Repeat for desired reps. Avoid swinging your body or using momentum.',
 //   badges: [
@@ -39,7 +40,7 @@ export function ExerciseCard() {
           <Text fz="lg" fw={500}>
             {title}
           </Text>
-          <Badge size="sm" variant="light" color= "purple" >
+          <Badge size="sm" variant="light">
             {country}
           </Badge>
         </Group>
@@ -75,8 +76,8 @@ export function ExerciseCard() {
        
 
       <Group mt="xs">
-        <Button radius="md" style={{ flex: 1 }} color= "#198754">
-          Save to My Routine
+        <Button radius="md" style={{ flex: 1 }}>
+          Show details
         </Button>
         {/* <ActionIcon variant="default" radius="md" size={36}>
           <IconBarbell className={classes.like} stroke={1.5} />

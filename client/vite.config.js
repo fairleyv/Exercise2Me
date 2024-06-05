@@ -9,7 +9,7 @@ export default defineConfig({
     assetsDir: '.', // Keep assets in the root of the output directory
   },
   server: {
-    port: process.env.PORT || 3000,
+    port: 3000,
     open: true,
     proxy: {
       '/graphql': {

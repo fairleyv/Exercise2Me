@@ -14,7 +14,7 @@ export const saveExerciseIds = (exerciseIdArr) => {
   }
 };
 
-export const deleteSavedExerciseId = (exerciseId) => {
+export const removeExerciseId = (exerciseId) => {
   const savedExerciseIds = localStorage.getItem('saved_exercises')
     ? JSON.parse(localStorage.getItem('saved_exercises'))
     : null;

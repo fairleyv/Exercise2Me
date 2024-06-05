@@ -12,6 +12,7 @@ import {
 } from 'react-bootstrap';
 
 
+
 import { useMutation } from '@apollo/client';
 import { SAVE_EXERCISE } from '../utils/mutations';
 import { saveExerciseIds, getSavedExerciseIds } from '../utils/localStorage';

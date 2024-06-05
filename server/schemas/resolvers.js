@@ -3,22 +3,49 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
     Query: {
+<<<<<<< Updated upstream
+        getAllUsers: async () => {
+            return User.find().populate('users');
+        },
+        getUserById: async (parent, { _id }) => {
+            return User.findOne({ _id }).populate('user');
+        },
+        getAllExercises: async () => {
+            return Exercise.find().populate('exercises');
+        },
+        getExerciseById: async (parent, { exerciseId }) => {
+            return Thought.findOne({ _id: exerciseId });
+        },
+        me: async (parent, args, context) => {
+            if (context.user) {
+                return User.findOne({ _id: context.user._id }).populate('savedExercises');
+            }
+            throw AuthenticationError;
+=======
+        getAllUsers: async(parent, {}) => {
+            return await User.find({});
+        },
+
         getUserById: async (parent, { username }) => {
             const user = await User.findOne({ $or: [{ username }, { _id: username }] }).populate('savedExercises').populate('favoriteExercises');
             return user;
         },      
+
         getAllExercises: async (parent, {}) => {
             return Exercise.find();
+>>>>>>> Stashed changes
         },
+
         getExerciseById: async(parent, {_id }) => {
             return Exercise.findById(_id);
         },
+
         getExerciseByGroup: async (parent, { groupName }) => {
             return Exercise.find({ "group.groupName": groupName });
         }
     },
     Mutation: {
-        createUser: async (parent, { username, email, password }) => {
+        addUser: async (parent, { username, email, password }) => {
             const user = await User.create({ username, email, password });
             const token = signToken(user);
             return { token, user };
@@ -39,94 +66,6 @@ const resolvers = {
             const token = signToken(user);
 
             return { token, user };
-        },
-        saveExercise: async (parent, {userId, exerciseId}, context) => {
-            if (!context.user || context.user._id !== userId) {
-                throw AuthenticationError;
-            };
-
-            const user = await User.findById(userId);
-            if (!user) {
-                throw new Error('User not found');
-            };
-
-            const exercise = await Exercise.findById(exerciseId);
-            if (!exercise) {
-                throw new Error('Exercise not found');
-            };
-
-            const updatedUser = await User.findOneAndUpdate(
-                {_id:userId},
-                {$addToSet: {savedExercises: exerciseId}},
-                {new: true}
-        );
-        return updatedUser;
-        }, 
-        favoriteExercise: async (parent, { userId, exerciseId }, context) => {
-            if (!context.user || context.user._id !== userId) {
-                throw AuthenticationError;
-            };
-
-            const user = await User.findById(userId);
-            if (!user) {
-                throw new Error('User not found');
-            };
-
-            const exercise = await Exercise.findById(exerciseId);
-            if (!exercise) {
-                throw new Error('Exercise not found');
-            };
-
-            const updatedUser = await User.findOneAndUpdate(
-                { _id: userId },
-                { $addToSet: { favoriteExercises: exerciseId } },
-                {new: true}
-            );
-            return updatedUser;
-        },
-        deleteSavedExercise: async (parent, { userId, exerciseId }, context) => {
-            if (!context.user || context.user._id !== userId) {
-                throw AuthenticationError;
-            };
-
-            const user = await User.findById(userId);
-            if (!user) {
-                throw new Error('User not found');
-            };
-
-            const exercise = await Exercise.findById(exerciseId);
-            if (!exercise) {
-                throw new Error('Exercise not found');
-            };
-
-            const updatedUser = await User.findOneAndUpdate(
-                { _id: userId },
-                { $pull: { savedExercises: exerciseId } },
-                {new: true}
-            );
-            return updatedUser;
-        },
-        deleteFavoriteExercise: async (parent, { userId, exerciseId }, context) => {
-            if (!context.user || context.user._id !== userId) {
-                throw AuthenticationError;
-            };
-
-            const user = await User.findById(userId);
-            if (!user) {
-                throw new Error('User not found');
-            };
-
-            const exercise = await Exercise.findById(exerciseId);
-            if (!exercise) {
-                throw new Error('Exercise not found');
-            };
-
-            const updatedUser = await User.findOneAndUpdate(
-                { _id: userId },
-                { $pull: { favoriteExercises: exerciseId } },
-                {new: true}
-            );
-            return updatedUser;
         },
     }
 };

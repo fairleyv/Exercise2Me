@@ -17,7 +17,7 @@ const typeDefs = `
     _id: ID
     description: String!
     image: String
-    equipmentNeeded: [String]
+    equipmentNeeded: String!
     difficulty: String!
     exerciseName: String!
     group: [Group]!
@@ -30,6 +30,7 @@ const typeDefs = `
 
 
   type Query {
+    getAllUsers: [User]!
     getUserById(_id: ID!): User
     getAllExercises: [Exercise]!
     getExerciseById(_id: ID!): Exercise
@@ -38,7 +39,7 @@ const typeDefs = `
   }
 
     type Mutation {
-    createUser(username: String!, email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     saveExercise(userId: ID!, exerciseId: ID!): User
     favoriteExercise(userId: ID!, exerciseId: ID!): User

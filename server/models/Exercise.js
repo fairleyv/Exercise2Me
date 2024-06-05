@@ -22,9 +22,10 @@ const exerciseSchema = new Schema({
   image: {
     type: String,
   },
-  equipmentNeeded: [{
-    type: String
-  }],
+  equipmentNeeded: {
+    type: String,
+    required: true,
+  },
   difficulty: {
     type: String,
     required: true

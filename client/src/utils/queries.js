@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_GET_USER_BY_ID = gql`
+export const QUERY_ME = gql`
 {
-    getUserById {
+    me {
         _id
         username
         email
@@ -20,6 +20,7 @@ export const QUERY_GET_USER_BY_ID = gql`
         }
     }
 }
+
 `;
 
 export const QUERY_GET_ALL_EXERCISES = gql`
@@ -32,7 +33,7 @@ export const QUERY_GET_ALL_EXERCISES = gql`
         difficulty
         image
         group {
-            exerciseName
+            groupName
             description
         }
     }

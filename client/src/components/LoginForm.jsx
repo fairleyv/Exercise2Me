@@ -32,6 +32,16 @@ const LoginForm = () => {
         variables: { ...userFormData },
       });
 
+      console.log(data.login);
+
+      if (data && data.login) {
+      console.log(data.login);
+      // Handle successful creation, e.g., redirect or show success message
+    } else {
+      // Handle case when data or createUser is not available
+      console.error("Error: login mutation returned invalid data");
+    }
+
       const { token, user } = data.login;
       console.log(user);
       Auth.login(token);
