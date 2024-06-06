@@ -13,7 +13,7 @@ export default function Demo() {
     <>
     <Grid className={classes.list} justify="space-around">
       <Grid.Col span={{ base: 12, md: 5}}>
-        <Container fluid><ExerciseList></ExerciseList></Container>
+        <Container fluid><MyListExercise></MyListExercise></Container>
         </Grid.Col>
 
       <Grid.Col span={{ base: 12, md: 5}}>

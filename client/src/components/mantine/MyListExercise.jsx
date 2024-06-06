@@ -1,4 +1,4 @@
-import cx from 'clsx';
+import { clsx } from 'clsx';
 import { Text } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
@@ -19,7 +19,7 @@ export function MyListExercise() {
     <Draggable key={item.image} index={index} draggableId={item.image}>
       {(provided, snapshot) => (
         <div
-          className={cx(classes.item, { [classes.itemDragging]: snapshot.isDragging })}
+          className={clsx(classes.item, { [classes.itemDragging]: snapshot.isDragging })}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}

@@ -1,4 +1,3 @@
-
 import Auth from '../utils/auth';
 import { useState, useEffect, useContext } from 'react';
 
