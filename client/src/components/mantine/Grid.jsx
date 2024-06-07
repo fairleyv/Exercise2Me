@@ -5,7 +5,8 @@ import { ExerciseList } from './ExerciseList';
 
 import classes from './Grid.module.css';
 
-import {MyListExercise} from './MyListExercise';
+import { MyListExercise } from './MyListExercise';
+import {PaperForRoutine} from './PaperForRoutine';
 
 
 export default function Demo() {
@@ -13,7 +14,9 @@ export default function Demo() {
     <>
     <Grid className={classes.list} justify="space-around">
       <Grid.Col span={{ base: 12, md: 5}}>
-        <Container fluid><ExerciseList></ExerciseList></Container>
+
+        <Container fluid><PaperForRoutine></PaperForRoutine></Container>
+
         </Grid.Col>
 
       <Grid.Col span={{ base: 12, md: 5}}>
