@@ -1,8 +1,9 @@
 import { clsx } from 'clsx';
-import { Text, Paper } from '@mantine/core';
+import { UnstyledButton  } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import { DragDropContext, Droppable, Draggable} from '@hello-pangea/dnd';
 import classes from './MyListExercise.module.css';
+import { IconFileDescription } from '@tabler/icons-react';
 
 const data = [
   { difficulty: "Easy", equipmentNeeded: "dumbell", image: 'C', ExerciseName: 'Bicep Curls' },
@@ -38,7 +39,9 @@ export function MyListExercise() {
                 Difficulty Level: {item.difficulty} • Equipment Needed: {item.equipmentNeeded}
               </Text> */}
             </div>
-
+            <UnstyledButton>
+              <IconFileDescription className={classes.like} />
+            </UnstyledButton>
           </div>
         </div>
       )}

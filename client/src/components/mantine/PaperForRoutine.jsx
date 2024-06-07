@@ -8,9 +8,9 @@ export function PaperForRoutine() {
   return (
     <>
       <Paper shadow="lg" p="xl">
-        <h3 className={classes.titleText}>
+        <h2 className={classes.titleText}>
         Organize your routine for the day:
-        </h3>
+        </h2>
         <Divider my="md" />
         <MyListExercise></MyListExercise>
       </Paper>
