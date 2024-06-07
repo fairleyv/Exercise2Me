@@ -1,8 +1,8 @@
-// import { IconHeart } from '@tabler/icons-react';
-
 import { IconBarbell, IconChartBarPopular } from '@tabler/icons-react';
 import { Card, Image, Text, Group, Badge, Button, ActionIcon } from '@mantine/core';
 import classes from './ExerciseCard.module.css';
+import { ExerciseContext } from '../../context/exerciseContext';
+import { useEffect, useState, useContext } from 'react';
 
 const mockdata = {
   image:
@@ -22,11 +22,6 @@ const mockdata = {
 
 export function ExerciseCard() {
   const { image, title, description, country, badges } = mockdata;
-//   const features = badges.map((badge) => (
-//     <Badge variant="light" key={badge.label} leftSection={badge.emoji}>
-//       {badge.label}
-//     </Badge>
-//   ));
 
   return (
     <Card withBorder radius="md" p="md" className={classes.card}>
