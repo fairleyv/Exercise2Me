@@ -21,6 +21,6 @@
 
 .dropText {
   text-decoration: underline;
-  opacity: .75;
+  font-weight: 300;
 }
 
