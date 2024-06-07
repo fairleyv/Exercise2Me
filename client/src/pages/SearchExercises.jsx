@@ -31,7 +31,7 @@ const SearchExercises = () => {
   const [saveExercise, { loading: mutationLoading, error: mutationError }] = useMutation(SAVE_EXERCISE);
 
   // set up useEffect hook to save `savedExerciseIds` list to localStorage on component unmount
-  // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
+
   useEffect(() => {
     return () => saveExerciseIds(savedExerciseIds);
   }, [savedExerciseIds]);
@@ -122,35 +122,7 @@ const SearchExercises = () => {
           {searchedExercises.length
             ? `Viewing ${searchedExercises.length} results:`
             : 'Choose type of exercise to begin'}
-        </h2>
-        <Row>
-          {/* {searchedExercises.map((Exercise) => {
-            return (
-              <Col md="4" key={Exercise.exerciseId}>
-                <Card border='dark'>
-                  {Exercise.image ? (
-                    <Card.Img src={Exercise.image} alt={`The cover for ${Exercise.exerciseName}`} variant='top' />
-                  ) : null}
-                  <Card.Body>
-                    <Card.Title>{Exercise.exerciseName}</Card.Title>
-                    <p className='small'>Equipment: {Exercise.equipmentNeeded}</p>
-                    <Card.Text>{Exercise.description}</Card.Text>
-                    {Auth.loggedIn() && (
-                      <Button
-                        disabled={savedExerciseIds?.some((savedExerciseId) => savedExerciseId === Exercise.exerciseId)}
-                        className='btn-block btn-info'
-                        onClick={() => handleSaveExercise(Exercise.exerciseId)}>
-                        {savedExerciseIds?.some((savedExerciseId) => savedExerciseId === Exercise.exerciseId)
-                          ? 'This Exercise has already been saved!'
-                          : 'Save this Exercise!'}
-                      </Button>
-                    )}
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })} */}
-        </Row>
+        </h2>        
       </Container>
     </>
   );

@@ -5,10 +5,9 @@ import { ExerciseList } from './ExerciseList';
 
 import classes from './Grid.module.css';
 
-import { MyListExercise } from './MyListExercise';
 import {PaperForRoutine} from './PaperForRoutine';
 
-
+// TODO add if statement
 export default function Demo() {
   return (
     <>

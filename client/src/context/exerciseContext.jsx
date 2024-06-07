@@ -14,14 +14,6 @@ const ExerciseProvider = ({ children }) => {
 
     const loggedIn = Auth.loggedIn(); // Check if the user is logged in
 
-
-    // const [exercises, setExercises] = useState([
-    //     { id: 1, name: 'exercise 1', difficulty: 'easy' },
-    //     { id: 2, name: 'exercise 2', difficulty: 'easy' },
-    //     { id: 3, name: 'exercise 3', difficulty: 'easy' },
-    // ]);
-
-
     const [exercisesByGroup, setExercisesByGroup] = useState([]);
     const [searchInput, setSearchInput] = useState([]);
     const [getExerciseByGroup, { loading, error: queryError, data: exerciseData }] = useLazyQuery(GET_EXERCISE_BY_GROUP, {
@@ -48,8 +40,9 @@ const ExerciseProvider = ({ children }) => {
                 description: exercise.description,
                 difficulty: exercise.difficulty,
                 image: exercise.image || '',
+                groupName: exercise.group[0].groupName,
             })));
-        };
+        }
 
         if (data.savedUserData) {
             setUserData(savedUserData);
@@ -57,6 +50,7 @@ const ExerciseProvider = ({ children }) => {
     }
     console.log(groupSearchFormatted);
     console.log(userData);
+    console.log(groupSearchFormatted.groupName);
 
 
     useEffect(() => {
