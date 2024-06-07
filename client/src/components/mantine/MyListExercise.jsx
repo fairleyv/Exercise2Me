@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import { Text } from '@mantine/core';
+import { Text, Paper } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import classes from './MyListExercise.module.css';
@@ -23,23 +23,23 @@ export function MyListExercise() {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
+          
         >
           {/* <Text className={classes.image}>{item.image}</Text> */}
           <div style={{ padding: '10px', width: '100%', display: 'flex', alignItems: 'center' }}>
-            <Text weight={500} size="lg" style={{ marginRight: '20px' }}>{index + 1}</Text> {/* Rank displayed based on current index */}
+            <h2 weight={500} size="lg" style={{ marginRight: '20px' }}>{index + 1}</h2> {/* Rank displayed based on current index */}
             
-          <div style={{ //border color and size styling
-            border: '1px solid black',
-            padding: '10px',
-            borderRadius: '5px',
-            width: '100%'
-        }}>
-            <Text size="xl">{item.ExerciseName}</Text>
-            <Text c="dimmed" size="sm">
-              Difficulty Level: {item.difficulty} • Equipment Needed: {item.equipmentNeeded}
-            </Text>
+            <div style={{ 
+              borderRadius: '1px',
+              width: '100%'
+          }}>
+              <h3 size="xl" className={classes.dropText}>{item.ExerciseName}</h3>
+              {/* <Text c="dimmed" size="sm">
+                Difficulty Level: {item.difficulty} • Equipment Needed: {item.equipmentNeeded}
+              </Text> */}
+            </div>
+
           </div>
-        </div>
         </div>
       )}
     </Draggable>
