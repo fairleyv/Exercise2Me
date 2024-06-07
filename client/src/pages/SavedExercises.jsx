@@ -6,15 +6,16 @@ import {
   Col
 } from 'react-bootstrap';
 
-import { useQuery, useMutation } from '@apollo/client';
+import {useContext} from 'react';
+import { ExerciseContext } from '../context/exerciseContext';
+import { useQuery } from '@apollo/client';
 import { QUERY_GET_USER_BY_USERNAME } from '../utils/queries';
-import { DELETE_SAVED_EXERCISE } from '../utils/mutations';
 import { deleteSavedExerciseId } from '../utils/localStorage';
 import Auth from '../utils/auth';
 
 const SavedExercises = () => {
   const { loading, data } = useQuery(QUERY_GET_USER_BY_USERNAME);
-  const  [deleteSavedExercise, { error }] = useMutation(DELETE_SAVED_EXERCISE);
+  const {handleDeleteSavedExercise} = useContext(ExerciseContext);
 
   const userData = data?.me || {};
 
@@ -27,16 +28,13 @@ const SavedExercises = () => {
     }
 
     try {
-      const { data } = await deleteSavedExercise({
-        variables: { exerciseId },
-      });
+      await handleDeleteSavedExercise(exerciseId);
 
-      // upon success, delete exercise's id from localStorage
-     deleteSavedExerciseId(exerciseId);
+    // upon success, delete exercise's id from localStorage
+    deleteSavedExerciseId(exerciseId);
     } catch (err) {
       console.error(err);
     }
-  };
 
   if (loading) {
     return <h2>LOADING...</h2>;
@@ -61,9 +59,9 @@ const SavedExercises = () => {
             return (
               <Col md="4">
                 <Card key={exercise.exerciseId} border='dark'>
-                  {exercise.image ? <Card.Img src={exercise.image} alt={`${exercise.name}`} variant='top' /> : null}
+                  {exercise.image ? <Card.Img src={exercise.image} alt={`${exercise.exerciseName}`} variant='top' /> : null}
                   <Card.Body>
-                    <Card.Title>{exercise.name}</Card.Title>
+                    <Card.Title>{exercise.exerciseName}</Card.Title>
                     <p className='small'>Equipment: {exercise.equipmentNeeded}</p>
                     <Card.Text>{exercise.description}</Card.Text>
                     <Button className='btn-block btn-danger' onClick={() => handleDeleteExercise(exercise.exerciseId)}>
@@ -78,6 +76,7 @@ const SavedExercises = () => {
       </Container>
     </>
   );
+};
 };
 
 export default SavedExercises;
