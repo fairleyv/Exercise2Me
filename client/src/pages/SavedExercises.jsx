@@ -7,13 +7,13 @@ import {
 } from 'react-bootstrap';
 
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_GET_USER_BY_ID } from '../utils/queries';
+import { QUERY_GET_USER_BY_USERNAME } from '../utils/queries';
 import { DELETE_SAVED_EXERCISE } from '../utils/mutations';
 import { deleteSavedExerciseId } from '../utils/localStorage';
 import Auth from '../utils/auth';
 
 const SavedExercises = () => {
-  const { loading, data } = useQuery(QUERY_GET_USER_BY_ID);
+  const { loading, data } = useQuery(QUERY_GET_USER_BY_USERNAME);
   const  [deleteSavedExercise, { error }] = useMutation(DELETE_SAVED_EXERCISE);
 
   const userData = data?.me || {};
