@@ -14,7 +14,12 @@ const data = [
 ];
 
 export function MyListExercise() {
-  const [state, handlers] = useListState(data);
+  const [state, handlers] = useListState(
+    () => JSON.parse(localStorage.getItem('exerciseData')) || data);
+
+    useEffect(() => {
+    localStorage.setItem('exerciseData', JSON.stringify(state));
+  }, [state]);
 
   const items = state.map((item, index) => (
     <Draggable key={item.image} index={index} draggableId={item.image}>
