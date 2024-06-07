@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { GET_EXERCISE_BY_GROUP } from '../utils/queries';
-import { useLazyQuery } from '@apollo/client';
+import {SAVE_EXERCISE, DELETE_SAVED_EXERCISE} from '../utils/mutations';
+import { useLazyQuery, useMutation } from '@apollo/client';
 
 // Create the context
 export const ExerciseContext = createContext();
@@ -23,6 +24,9 @@ const ExerciseProvider = ({ children }) => {
         variables: { groupName: searchInput },
     });
 
+    const [saveExercise] = useMutation(SAVE_EXERCISE);
+    const [deleteSavedExercise] = useMutation(DELETE_SAVED_EXERCISE);
+
     const formatData = (data) => {
 
         let dataArray = data?.getExerciseByGroup;
@@ -33,11 +37,12 @@ const ExerciseProvider = ({ children }) => {
                 exerciseName: exercise.exerciseName,
                 description: exercise.description,
                 difficulty: exercise.difficulty,
-                image: exercise.imageLinks?.thumbnail || '',
+                image: exercise.image || '',
             })));
         }
     }
     console.log(groupSearchFormatted);
+
 
     useEffect(() => {
         console.log(exerciseData);
@@ -61,13 +66,28 @@ const ExerciseProvider = ({ children }) => {
         }
     }
 
+    const handleSaveExercise = async (exerciseData) => {
+        try {
+            const {data} = await saveExercise({ variables: {exerciseData}});
 
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleDeleteSavedExercise = async (exerciseId) => {
+        try {
+            const {data} = await deleteSavedExercise({ variables: {exerciseId}});
+        } catch (err) {
+            console.error(err);
+        }
+    };
     const addExerciseToDatabase = (newTask) => {
 
     };
 
     return (
-        <ExerciseContext.Provider value={{ exerciseSearch, exercisesByGroup, groupSearchFormatted }}>
+        <ExerciseContext.Provider value={{ exerciseSearch, exercisesByGroup, groupSearchFormatted, handleSaveExercise, handleDeleteSavedExercise}}>
             {children}
         </ExerciseContext.Provider>
     );
