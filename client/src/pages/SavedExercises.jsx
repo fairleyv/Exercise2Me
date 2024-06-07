@@ -8,16 +8,11 @@ import {
 
 import {useContext} from 'react';
 import { ExerciseContext } from '../context/exerciseContext';
-import { useQuery } from '@apollo/client';
-import { QUERY_GET_USER_BY_USERNAME } from '../utils/queries';
 import { deleteSavedExerciseId } from '../utils/localStorage';
 import Auth from '../utils/auth';
 
 const SavedExercises = () => {
-  const { loading, data } = useQuery(QUERY_GET_USER_BY_USERNAME);
   const {handleDeleteSavedExercise} = useContext(ExerciseContext);
-
-  const userData = data?.me || {};
 
   // create function that accepts the Exercise's mongo _id value as param and deletes the Exercise from the database
   const handleDeleteExercise = async (exerciseId) => {
@@ -36,9 +31,10 @@ const SavedExercises = () => {
       console.error(err);
     }
 
-  if (loading) {
+  if (!userData) {
     return <h2>LOADING...</h2>;
   }
+  console.log(userData);
 
 
   return (
@@ -77,6 +73,6 @@ const SavedExercises = () => {
     </>
   );
 };
-};
+}
 
 export default SavedExercises;

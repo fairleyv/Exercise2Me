@@ -1,5 +1,4 @@
 import { Title, Paper, Divider} from '@mantine/core';
-
 import classes from './PaperForRoutine.module.css';
 
 import { MyListExercise } from './MyListExercise';
