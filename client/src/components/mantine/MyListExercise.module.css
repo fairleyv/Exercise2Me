@@ -6,6 +6,8 @@
   padding: var(--mantine-spacing-sm) var(--mantine-spacing-xl);
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-5));
   margin-bottom: var(--mantine-spacing-sm);
+  box-shadow: var(--mantine-shadow-sm);
+
 }
 
 .itemDragging {
@@ -16,5 +18,10 @@
   font-size: rem(30px);
   font-weight: 700;
   width: rem(60px);
+}
+
+.dropText {
+  text-decoration: underline;
+  opacity: .75;
 }
 
