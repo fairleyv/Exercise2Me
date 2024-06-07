@@ -15,7 +15,7 @@ const AppNavbar = () => {
       <Navbar bg='dark' variant='dark' expand='lg'>
         <Container fluid>
           <Navbar.Brand as={Link} to='/'>
-            <h1 className='shadow-lg'><i>Exercise<span className='text-danger'>2</span><span className=''>Me</span></i></h1>
+            <h1 className='shadow-lg'><i>Exercise<span className='text-danger'>4</span><span className=''>Me</span></i></h1>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>

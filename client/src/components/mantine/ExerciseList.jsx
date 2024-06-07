@@ -1,23 +1,33 @@
 import { Title, Paper, Divider, UnstyledButton } from '@mantine/core';
+import { ExerciseContext } from '../../context/exerciseContext';
+import { useEffect, useState, useContext } from 'react';
 
-const data = {
-    exercises: [
-      "Biceps Curls", 
-      "Overhead Press", 
-      "Pushup",
-      "Triceps Kickback",
-      "Bench press"
-    ]
-}
+
+// const data = {
+//     exercises: [
+//       "Biceps Curls", 
+//       "Overhead Press", 
+//       "Pushup",
+//       "Triceps Kickback",
+//       "Bench press"
+//     ]
+// }
 
 export function ExerciseList() {
-  const { exercises } = data;
+  const { groupSearchFormatted } = useContext(ExerciseContext);
+  // const { exercises } = data;
+const [exercises, setExercises] = useState([]);
+useEffect(() => {
+  setExercises(groupSearchFormatted)
+  console.log(groupSearchFormatted);
+  console.log(exercises);
+}, [groupSearchFormatted])
 
   const featured = exercises.map((exercise) => (
     <>
     <Divider my="md" />
     <UnstyledButton>
-      {exercise}
+      {exercise.exerciseName}
     </UnstyledButton>
     </>
   ))
