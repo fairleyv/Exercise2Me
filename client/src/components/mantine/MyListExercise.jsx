@@ -1,8 +1,9 @@
-import { clsx } from 'clsx';
+import {clsx} from 'clsx';
 import { Text } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import classes from './MyListExercise.module.css';
+import { useEffect } from 'react';
 
 const data = [
   { difficulty: "Easy", equipmentNeeded: "dumbell", image: 'C', ExerciseName: 'Bicep Curls' },
@@ -13,7 +14,13 @@ const data = [
 ];
 
 export function MyListExercise() {
-  const [state, handlers] = useListState(data);
+  const [state, handlers] = useListState(
+    () => JSON.parse(localStorage.getItem('exerciseData')) || data);
+
+    useEffect(() => {
+    localStorage.setItem('exerciseData', JSON.stringify(state));
+  }, [state]);
+
 
   const items = state.map((item, index) => (
     <Draggable key={item.image} index={index} draggableId={item.image}>
