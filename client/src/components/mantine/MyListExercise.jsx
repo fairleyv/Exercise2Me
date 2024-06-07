@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
 import { clsx } from 'clsx';
-=======
-import {clsx} from 'clsx';
->>>>>>> Stashed changes
 import { Text } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
