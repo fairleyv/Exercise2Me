@@ -37,7 +37,7 @@ const ExerciseProvider = ({ children }) => {
                 exerciseName: exercise.exerciseName,
                 description: exercise.description,
                 difficulty: exercise.difficulty,
-                image: exercise.imageLinks?.thumbnail || '',
+                image: exercise.image || '',
             })));
         }
     }

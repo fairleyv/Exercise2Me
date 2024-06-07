@@ -77,5 +77,6 @@ const SavedExercises = () => {
     </>
   );
 };
+};
 
 export default SavedExercises;
