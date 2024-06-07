@@ -1,10 +1,9 @@
-import {clsx} from 'clsx';
+import { clsx } from 'clsx';
 import { UnstyledButton  } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable} from '@hello-pangea/dnd';
 import classes from './MyListExercise.module.css';
 import { IconFileDescription } from '@tabler/icons-react';
-import { useEffect } from 'react';
 
 const data = [
   { difficulty: "Easy", equipmentNeeded: "dumbell", image: 'C', ExerciseName: 'Bicep Curls' },
@@ -15,13 +14,7 @@ const data = [
 ];
 
 export function MyListExercise() {
-  const [state, handlers] = useListState(
-    () => JSON.parse(localStorage.getItem('exerciseData')) || data);
-
-    useEffect(() => {
-    localStorage.setItem('exerciseData', JSON.stringify(state));
-  }, [state]);
-
+  const [state, handlers] = useListState(data);
 
   const items = state.map((item, index) => (
     <Draggable key={item.image} index={index} draggableId={item.image}>
@@ -37,18 +30,19 @@ export function MyListExercise() {
           <div style={{ padding: '10px', width: '100%', display: 'flex', alignItems: 'center' }}>
             <h2 weight={500} size="lg" style={{ marginRight: '20px' }}>{index + 1}</h2> {/* Rank displayed based on current index */}
             
-          <div style={{ //border color and size styling
-            border: '1px solid black',
-            padding: '10px',
-            borderRadius: '5px',
-            width: '100%'
-        }}>
-            <Text size="xl">{item.ExerciseName}</Text>
-            <Text c="dimmed" size="sm">
-              Difficulty Level: {item.difficulty} • Equipment Needed: {item.equipmentNeeded}
-            </Text>
+            <div style={{ 
+              borderRadius: '1px',
+              width: '100%'
+          }}>
+              <h3 size="xl" className={classes.dropText}>{item.ExerciseName}</h3>
+              {/* <Text c="dimmed" size="sm">
+                Difficulty Level: {item.difficulty} • Equipment Needed: {item.equipmentNeeded}
+              </Text> */}
+            </div>
+            <UnstyledButton>
+              <IconFileDescription className={classes.like} />
+            </UnstyledButton>
           </div>
-        </div>
         </div>
       )}
     </Draggable>
