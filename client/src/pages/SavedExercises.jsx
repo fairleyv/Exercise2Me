@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import {
   Container,
   Card,
@@ -6,41 +5,18 @@ import {
   Row,
   Col
 } from 'react-bootstrap';
-// TODO change paths to queries and mutations
-import { getMe, deleteExercise } from '../utils/API';
+
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_GET_USER_BY_ID } from '../utils/queries';
+import { DELETE_SAVED_EXERCISE } from '../utils/mutations';
+import { deleteSavedExerciseId } from '../utils/localStorage';
 import Auth from '../utils/auth';
-import { removeExerciseId } from '../utils/localStorage';
 
 const SavedExercises = () => {
-  const [userData, setUserData] = useState({});
+  const { loading, data } = useQuery(QUERY_GET_USER_BY_ID);
+  const  [deleteSavedExercise, { error }] = useMutation(DELETE_SAVED_EXERCISE);
 
-  // use this to determine if `useEffect()` hook needs to run again
-  const userDataLength = Object.keys(userData).length;
-
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-        if (!token) {
-          return false;
-        }
-
-        const response = await getMe(token);
-
-        if (!response.ok) {
-          throw new Error('something went wrong!');
-        }
-
-        const user = await response.json();
-        setUserData(user);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    getUserData();
-  }, [userDataLength]);
+  const userData = data?.me || {};
 
   // create function that accepts the Exercise's mongo _id value as param and deletes the Exercise from the database
   const handleDeleteExercise = async (exerciseId) => {
@@ -51,31 +27,27 @@ const SavedExercises = () => {
     }
 
     try {
-      const response = await deleteExercise(exerciseId, token);
+      const { data } = await deleteSavedExercise({
+        variables: { exerciseId },
+      });
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
-
-      const updatedUser = await response.json();
-      setUserData(updatedUser);
-      // upon success, remove Exercise's id from localStorage
-      removeExerciseId(exerciseId);
+      // upon success, delete exercise's id from localStorage
+     deleteSavedExerciseId(exerciseId);
     } catch (err) {
       console.error(err);
     }
   };
 
-  // if data isn't here yet, say so
-  if (!userDataLength) {
+  if (loading) {
     return <h2>LOADING...</h2>;
   }
+
 
   return (
     <>
       <div fluid className="text-light bg-dark p-5">
         <Container>
-          <h1>Viewing your Routine!</h1>
+          <h1>Viewing {userData.username}'s Routine!</h1>
         </Container>
       </div>
       <Container>
@@ -85,17 +57,17 @@ const SavedExercises = () => {
             : 'You have no saved exercises!'}
         </h2> */}
         <Row>
-          {userData.savedExercises.map((Exercise) => {
+          {userData.savedExercises?.map((exercise) => {
             return (
               <Col md="4">
-                <Card key={Exercise.exerciseId} border='dark'>
-                  {Exercise.image ? <Card.Img src={Exercise.image} alt={`${Exercise.name}`} variant='top' /> : null}
+                <Card key={exercise.exerciseId} border='dark'>
+                  {exercise.image ? <Card.Img src={exercise.image} alt={`${exercise.name}`} variant='top' /> : null}
                   <Card.Body>
-                    <Card.Title>{Exercise.name}</Card.Title>
-                    <p className='small'>Equipment: {Exercise.equipmentNeeded}</p>
-                    <Card.Text>{Exercise.description}</Card.Text>
-                    <Button className='btn-block btn-danger' onClick={() => handleDeleteExercise(Exercise.exerciseId)}>
-                      Delete this Exercise!
+                    <Card.Title>{exercise.name}</Card.Title>
+                    <p className='small'>Equipment: {exercise.equipmentNeeded}</p>
+                    <Card.Text>{exercise.description}</Card.Text>
+                    <Button className='btn-block btn-danger' onClick={() => handleDeleteExercise(exercise.exerciseId)}>
+                     delete this Exercise!
                     </Button>
                   </Card.Body>
                 </Card>

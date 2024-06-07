@@ -8,13 +8,19 @@ const typeDefs = `
     favoriteExercises: [Exercise]!
   }
 
+  type Group {
+    groupName: String!
+    description: String!
+  }
+
   type Exercise {
     _id: ID
     description: String!
     image: String
-    equipmentNeeded: [String]
+    equipmentNeeded: String!
     difficulty: String!
     exerciseName: String!
+    group: [Group]!
   }
 
     type Auth {
@@ -27,11 +33,12 @@ const typeDefs = `
     getUserById(_id: ID!): User
     getAllExercises: [Exercise]!
     getExerciseById(_id: ID!): Exercise
+    getExerciseByGroup(groupName: String!): [Exercise]
 
   }
 
     type Mutation {
-    addUser(username: String!, email: String!, password: String!): Auth
+    createUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     saveExercise(userId: ID!, exerciseId: ID!): User
     favoriteExercise(userId: ID!, exerciseId: ID!): User
