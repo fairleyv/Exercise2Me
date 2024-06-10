@@ -4,7 +4,14 @@ const users = [
         "id": "123",
         "username": "lernantino",
         "email": "lernantino@gmail.com",
-        "password": "lernantino111000"
+        "password": "lernantino111000",
+        "savedExercises": [
+            { difficulty: "Easy", equipmentNeeded: "dumbell", image: 'C', ExerciseName: 'Bicep Curls' },
+            { difficulty: "Intermediate", equipmentNeeded: "kettlebell", image: 'N', ExerciseName: 'Lateral Raises' },
+            { difficulty: "Intermediate", equipmentNeeded: "ropes", image: 'Y', ExerciseName: 'Alternating Waves' },
+            { difficulty: "Hard", equipmentNeeded: "Pullup Bar", image: 'Ba', ExerciseName: 'Pull Ups' },
+            { difficulty: "Easy", equipmentNeeded: "None", image: 'Ce', ExerciseName: 'Pushups' },
+        ] 
     },
     {
         "id": "1234",

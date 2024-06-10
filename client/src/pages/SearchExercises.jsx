@@ -15,6 +15,8 @@ import { useMutation } from '@apollo/client';
 import { SAVE_EXERCISE } from '../utils/mutations';
 import { saveExerciseIds, getSavedExerciseIds } from '../utils/localStorage';
 import { ExerciseContext } from '../context/exerciseContext';
+import Demo from '../components/mantine/Grid';
+
 
 
 const SearchExercises = () => {
@@ -123,6 +125,7 @@ const SearchExercises = () => {
             ? `Viewing ${searchedExercises.length} results:`
             : 'Choose type of exercise to begin'}
         </h2>        
+        <Demo/>
       </Container>
     </>
   );
