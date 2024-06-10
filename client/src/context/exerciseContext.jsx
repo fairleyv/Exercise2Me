@@ -14,7 +14,7 @@ const ExerciseProvider = ({ children }) => {
     const [selectedExerciseFormatted, setSelectedExerciseFormatted] = useState([]);
     
     const loggedIn = Auth.loggedIn(); // Check if the user is logged in
-    
+    //TODO have selectedExercise set but I'm not using it
     const [selectedExercise, setSelectedExercise] = useState([]);
     const [exercisesByGroup, setExercisesByGroup] = useState([]);
     const [searchInput, setSearchInput] = useState([]);

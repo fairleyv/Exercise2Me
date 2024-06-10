@@ -10,23 +10,23 @@ export function ExerciseCard() {
   const { selectedExerciseFormatted } = useContext(ExerciseContext);
   // map data
 
-  const selected = selectedExerciseFormatted.map((exercise) => (
+  const selected = selectedExerciseFormatted.map((selectedExercise) => (
     <>
       <Card.Section>
-        <Image src={exercise.image} alt={exercise.exerciseName} height={180} />
+        <Image src={selectedExercise.image} alt={selectedExercise.exerciseName} height={180} />
       </Card.Section>
 
       <Card.Section className={classes.section} mt="md">
         <Group justify="apart">
           <Text fz="lg" fw={500}>
-            {exercise.exerciseName}
+            {selectedExercise.exerciseName}
           </Text>
           <Badge size="sm" variant="light" color="purple" >
-            {exercise.groupName}
+            {selectedExercise.groupName}
           </Badge>
         </Group>
         <Text fz="sm" mt="xs">
-          {exercise.description}
+          {selectedExercise.description}
         </Text>
       </Card.Section>
 
@@ -34,11 +34,11 @@ export function ExerciseCard() {
         <div className={classes.iconContainer}>
           <div>
             <IconBarbell className={classes.like} stroke={1.5} />
-            <h6>{exercise.equipmentNeeded}</h6>
+            <h6>{selectedExercise.equipmentNeeded}</h6>
           </div>
           <div>
             <IconChartBarPopular className={classes.like} stroke={1.5} />
-            <h6>{exercise.difficulty}</h6>
+            <h6>{selectedExercise.difficulty}</h6>
           </div>
         </div>
       </Card.Section>
