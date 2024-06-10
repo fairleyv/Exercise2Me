@@ -15,6 +15,9 @@ const resolvers = {
         },
         getExerciseByGroup: async (parent, { groupName }) => {
             return Exercise.find({ "group.groupName": groupName });
+        },
+        getExerciseByExerciseName: async (parent, { exerciseName }) => {
+            return Exercise.find({ "exerciseName": exerciseName });
         }
     },
     Mutation: {

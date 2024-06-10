@@ -19,11 +19,13 @@ export function ExerciseList() {
   // get group name to appear
   const groupName = exercises.length > 0 ? exercises[1].groupName : '';
 
-  const handleExerciseClick = (exercise) => {
-    console.log(exercise);
-    exerciseChoice(exercise.exerciseName);
+  const handleExerciseClick = (selectedExercise) => {
+    console.log(selectedExercise);
+    exerciseChoice(selectedExercise);
+    setSelectedExercise('');
+    return setSelectedExercise;
   };
-
+  
   // handle onClick event for selected exercise
   const featured = groupSearchFormatted.map((exercise) => (
     <>

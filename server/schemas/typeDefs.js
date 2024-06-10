@@ -34,6 +34,7 @@ const typeDefs = `
     getAllExercises: [Exercise]!
     getExerciseById(_id: ID!): Exercise
     getExerciseByGroup(groupName: String!): [Exercise]
+    getExerciseByExerciseName(exerciseName: String!): [Exercise]
 
   }
 

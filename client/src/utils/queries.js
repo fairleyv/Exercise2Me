@@ -55,3 +55,20 @@ query Query($groupName: String!) {
   }
 }
 `
+
+export const GET_EXERCISE_BY_EXERCISENAME = gql `
+query Query($exerciseName: String!) {
+  getExerciseByExerciseName(exerciseName: $exerciseName) {
+    _id
+    description
+    image
+    equipmentNeeded
+    difficulty
+    exerciseName
+    group {
+      groupName
+      description
+    }
+  }
+}
+`
