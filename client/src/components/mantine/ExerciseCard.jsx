@@ -9,11 +9,14 @@ export function ExerciseCard() {
 
   const { selectedExerciseFormatted } = useContext(ExerciseContext);
   // map data
+  console.log(selectedExerciseFormatted);
+
+  // console.log(data2.getExerciseByExerciseName);
 
   const selected = selectedExerciseFormatted.map((selectedExercise) => (
-        <>
+    <>
       <Card.Section>
-        <Image src={"https://steelsupplements.com/cdn/shop/articles/shutterstock_657941434_376ae0c9-1a39-42d3-bc39-3eaf18d5038f_1000x.jpg?v=1641548776'"} alt={selectedExercise.exerciseName} height={180} />
+        <Image src="https://steelsupplements.com/cdn/shop/articles/shutterstock_657941434_376ae0c9-1a39-42d3-bc39-3eaf18d5038f_1000x.jpg?v=1641548776" alt={selectedExercise.exerciseName} height={180} />
       </Card.Section>
 
       <Card.Section className={classes.section} mt="md">
