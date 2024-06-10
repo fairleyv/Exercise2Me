@@ -36,12 +36,34 @@ const ExerciseProvider = ({ children }) => {
     const [saveExercise] = useMutation(SAVE_EXERCISE);
     const [deleteSavedExercise] = useMutation(DELETE_SAVED_EXERCISE);
 
+    useEffect(() => {
+        if (loggedIn) {
+            console.log("Triggering userQueryData...");
+            userQueryData(); // Trigger the lazy query
+        }
+    }, [loggedIn]);
+
+    useEffect(() => {
+        if (error) {
+            console.error("Query error:", error);
+        }
+    }, [error]);
+
+    useEffect(() => {
+        if (data) {
+            setUserData(data.getUserByUsername); // Log the actual data returned by the query
+        }
+
+        if (!loadingAgain && exerciseData && data) { // Ensure 'data' from userQueryData is also available
+            formatData(exerciseData, data); // Pass the actual data, not the function
+        }
+    }, [loadingAgain, exerciseData, data]);
+
     const formatData = (data) => {
 
         if (!data) return;
 
         let dataArray = data?.getExerciseByGroup;
-        let savedUserData = data.userQueryData;
         if (data.getExerciseByGroup) {
             setGroupSearchFormatted(dataArray.map((exercise) => ({
                 exerciseId: exercise._id,
@@ -53,9 +75,6 @@ const ExerciseProvider = ({ children }) => {
                 groupName: exercise.group[0].groupName,
 
             })));
-        }
-        if (data.savedUserData) {
-            setUserData(savedUserData);
         }
     }
     // console.log(groupSearchFormatted);
