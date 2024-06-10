@@ -105,7 +105,7 @@ const ExerciseProvider = ({ children }) => {
     }
 
     const exerciseChoice = (selectedExercise) => {
-       console.log(selectedExercise);
+    //    console.log(selectedExercise);
         getExerciseByName({
         variables: { exerciseName: selectedExercise }
     });
@@ -117,10 +117,12 @@ const ExerciseProvider = ({ children }) => {
     }}
     // TODO For selected exercises getting all the exercises data
     const formatSelectedExercise = (data2) => {
-        console.log(data2);
+        // console.log(data2);
+        console.log(data2.getExerciseByExerciseName)
         if (!data2) return;
         let dataArray2 = data2?.getExerciseByName;
-        if (data2.getExerciseByName) {
+        if (data2.getExerciseByExerciseName) {
+            // setSelectedExerciseFormatted(dataArray2)
             setSelectedExerciseFormatted(dataArray2.map((exercise) => ({
                 exerciseId: exercise._id,
                 equipmentNeeded: exercise.equipmentNeeded || ['No equipment to display'],
@@ -129,8 +131,8 @@ const ExerciseProvider = ({ children }) => {
                 difficulty: exercise.difficulty,
                 image: exercise.image || '',
                 groupName: exercise.group[0].groupName,
-            })));
-        }
+                })));
+                }
     }
     useEffect(() => {
         setTimeout(() => formatSelectedExercise(selectedExerciseData), 30)

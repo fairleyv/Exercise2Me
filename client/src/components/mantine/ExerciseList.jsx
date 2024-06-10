@@ -20,7 +20,7 @@ export function ExerciseList() {
   const groupName = exercises.length > 0 ? exercises[1].groupName : '';
 
   const handleExerciseClick = (selectedExercise) => {
-    console.log(selectedExercise);
+    // console.log(selectedExercise);
     exerciseChoice(selectedExercise);
     setSelectedExercise('');
     return setSelectedExercise;
