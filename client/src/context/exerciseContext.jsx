@@ -56,10 +56,10 @@ const ExerciseProvider = ({ children }) => {
             setUserData(data.getUserByUsername); // Log the actual data returned by the query
         }
 
-        if (!loadingAgain && exerciseData && data) { // Ensure 'data' from userQueryData is also available
-            formatData(exerciseData, data); // Pass the actual data, not the function
+        if (!loadingAgain && selectedExerciseData && data) { // Ensure 'data' from userQueryData is also available
+            formatData(selectedExerciseData, data); // Pass the actual data, not the function
         }
-    }, [loadingAgain, exerciseData, data]);
+    }, [loadingAgain, selectedExerciseData, data]);
 
     const formatData = (data) => {
 
