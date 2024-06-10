@@ -12,11 +12,14 @@ import { deleteSavedExerciseId } from '../utils/localStorage';
 import Auth from '../utils/auth';
 
 const SavedExercises = () => {
-  const {handleDeleteSavedExercise} = useContext(ExerciseContext);
+  const {handleDeleteSavedExercise, userData} = useContext(ExerciseContext);
+  console.log(userData.username);
 
   // create function that accepts the Exercise's mongo _id value as param and deletes the Exercise from the database
   const handleDeleteExercise = async (exerciseId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    console.log(`I'm Here...`)
 
     if (!token) {
       return false;
@@ -30,10 +33,13 @@ const SavedExercises = () => {
     } catch (err) {
       console.error(err);
     }
+  }
 
   if (!userData) {
     return <h2>LOADING...</h2>;
   }
+
+
   console.log(userData);
 
 
@@ -41,15 +47,15 @@ const SavedExercises = () => {
     <>
       <div fluid className="text-light bg-dark p-5">
         <Container>
-          <h1>Viewing {userData.username}'s Routine!</h1>
+          <h1>Viewing {userData?.username}'s Routine!</h1>
         </Container>
       </div>
       <Container>
-        {/* <h2 className='pt-5'>
-          {userData.savedExercises.length
+        <h2 className='pt-5'>
+          {userData.savedExercises?.length
             ? `Viewing ${userData.savedExercises.length} saved ${userData.savedExercises.length === 1 ? 'exercise' : 'exercises'}:`
             : 'You have no saved exercises!'}
-        </h2> */}
+        </h2>
         <Row>
           {userData.savedExercises?.map((exercise) => {
             return (
@@ -73,6 +79,5 @@ const SavedExercises = () => {
     </>
   );
 };
-}
 
 export default SavedExercises;
