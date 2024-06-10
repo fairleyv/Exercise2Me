@@ -4,6 +4,7 @@ import { useListState } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable} from '@hello-pangea/dnd';
 import classes from './MyListExercise.module.css';
 import { IconFileDescription } from '@tabler/icons-react';
+import { useEffect } from 'react';
 
 const data = [
   { difficulty: "Easy", equipmentNeeded: "dumbell", image: 'C', ExerciseName: 'Bicep Curls' },

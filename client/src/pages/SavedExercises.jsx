@@ -10,7 +10,7 @@ import {useContext} from 'react';
 import { ExerciseContext } from '../context/exerciseContext';
 import { deleteSavedExerciseId } from '../utils/localStorage';
 import Auth from '../utils/auth';
-
+import { PaperForRoutine } from '../components/mantine/PaperForRoutine';
 const SavedExercises = () => {
   const {handleDeleteSavedExercise, userData} = useContext(ExerciseContext);
   console.log(userData.username);
@@ -51,6 +51,7 @@ const SavedExercises = () => {
         </Container>
       </div>
       <Container>
+        <PaperForRoutine/>
         <h2 className='pt-5'>
           {userData.savedExercises?.length
             ? `Viewing ${userData.savedExercises.length} saved ${userData.savedExercises.length === 1 ? 'exercise' : 'exercises'}:`

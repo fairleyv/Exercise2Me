@@ -21,7 +21,7 @@ function App() {
           <ExerciseProvider>
         <Navbar />
         <Outlet />
-        <Demo />
+        {/* <Demo /> */}
           </ExerciseProvider>
       </MantineProvider>
     </ApolloProvider>
