@@ -11,7 +11,7 @@ export function ExerciseCard() {
   // map data
 
   const selected = selectedExerciseFormatted.map((selectedExercise) => (
-    <>
+        <>
       <Card.Section>
         <Image src={selectedExercise.image} alt={selectedExercise.exerciseName} height={180} />
       </Card.Section>

@@ -1,8 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { GET_EXERCISE_BY_GROUP, QUERY_GET_USER_BY_USERNAME, QUERY_GET_ALL_EXERCISES } from '../utils/queries';
+import { GET_EXERCISE_BY_GROUP, QUERY_GET_USER_BY_USERNAME, GET_EXERCISE_BY_EXERCISENAME } from '../utils/queries';
 import { SAVE_EXERCISE, DELETE_SAVED_EXERCISE } from '../utils/mutations';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
+import { ExerciseList } from '../components/mantine/ExerciseList';
 
 // Create the context
 export const ExerciseContext = createContext();
@@ -14,19 +15,20 @@ const ExerciseProvider = ({ children }) => {
     const [selectedExerciseFormatted, setSelectedExerciseFormatted] = useState([]);
     
     const loggedIn = Auth.loggedIn(); // Check if the user is logged in
-    //TODO have selectedExercise set but I'm not using it
+    //TODO have selectedExercise set but I'm not getting it from ExerciseList
     const [selectedExercise, setSelectedExercise] = useState([]);
     const [exercisesByGroup, setExercisesByGroup] = useState([]);
     const [searchInput, setSearchInput] = useState([]);
-    const [searchOnClick, setSearchOnClick] = useState([]);
+    
+    
     const [getExerciseByGroup, { loading, error: queryError, data: exerciseDataByGroup }] = useLazyQuery(GET_EXERCISE_BY_GROUP, {
         variables: {
             groupName: searchInput
         },
     });
-    const [getExercise, { loadingAgain, error: exerciseError, data: exerciseData }] = useLazyQuery(QUERY_GET_ALL_EXERCISES, {
+    const [getExerciseByName, { loadingAgain, error: exerciseError, data: selectedExerciseData }] = useLazyQuery(GET_EXERCISE_BY_EXERCISENAME, {
         variables: {
-            exerciseName: searchOnClick
+            exerciseName: selectedExercise
         },
     });
     const [userQueryData, { error, data }] = useLazyQuery(QUERY_GET_USER_BY_USERNAME, {
@@ -83,12 +85,23 @@ const ExerciseProvider = ({ children }) => {
         }
     }
 
+    const exerciseChoice = (selectedExercise) => {
+       console.log(selectedExercise);
+        getExerciseByName({
+        variables: { exerciseName: selectedExercise }
+    });
+    if (loadingAgain) {
+        return <div>Loading...</div>;
+    }
+    if (exerciseError) {
+        return <div>Error...</div>;
+    }}
     // TODO For selected exercises getting all the exercises data
-    const formatSelectedExercise = (exerciseData) => {
-        console.log(exerciseData);
-        if (!exerciseData) return;
-        let dataArray2 = exerciseData?.getExercise;
-        if (exerciseData.getExercise) {
+    const formatSelectedExercise = (data2) => {
+        console.log(data2);
+        if (!data2) return;
+        let dataArray2 = data2?.getExerciseByName;
+        if (data2.getExerciseByName) {
             setSelectedExerciseFormatted(dataArray2.map((exercise) => ({
                 exerciseId: exercise._id,
                 equipmentNeeded: exercise.equipmentNeeded || ['No equipment to display'],
@@ -101,21 +114,10 @@ const ExerciseProvider = ({ children }) => {
         }
     }
     useEffect(() => {
-        formatSelectedExercise(exerciseData)
-    }, [exerciseData])
+        setTimeout(() => formatSelectedExercise(selectedExerciseData), 30)
+    }, [selectedExerciseData])
 
-    const exerciseChoice = (clickInput) => {
-       
-        getExercise({
-        variables: { exerciseName: clickInput }
-    });
-    if (loadingAgain) {
-        return <div>Loading...</div>;
-    }
-    if (exerciseError) {
-        return <div>Error...</div>;
-    }}
-
+// TODO saave and delete
     const handleSaveExercise = async (exerciseData) => {
         try {
             const { data } = await saveExercise({ variables: { exerciseData } });
