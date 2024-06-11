@@ -122,16 +122,16 @@ const ExerciseProvider = ({ children }) => {
         if (!data2) return;
         let dataArray2 = data2?.getExerciseByName;
         if (data2.getExerciseByExerciseName) {
-            // setSelectedExerciseFormatted(dataArray2)
-            setSelectedExerciseFormatted(dataArray2.map((exercise) => ({
-                exerciseId: exercise._id,
-                equipmentNeeded: exercise.equipmentNeeded || ['No equipment to display'],
-                exerciseName: exercise.exerciseName,
-                description: exercise.description,
-                difficulty: exercise.difficulty,
-                image: exercise.image || '',
-                groupName: exercise.group[0].groupName,
-                })));
+            setSelectedExerciseFormatted(data2.getExerciseByExerciseName)
+            // setSelectedExerciseFormatted(dataArray2.map((exercise) => ({
+            //     exerciseId: exercise._id,
+            //     equipmentNeeded: exercise.equipmentNeeded || ['No equipment to display'],
+            //     exerciseName: exercise.exerciseName,
+            //     description: exercise.description,
+            //     difficulty: exercise.difficulty,
+            //     image: exercise.image || '',
+            //     groupName: exercise.group[0].groupName,
+            //     })));
                 }
     }
     useEffect(() => {
